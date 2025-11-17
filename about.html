@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | The Accidental Watermelon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Righteous&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-green: #39ff14;
+            --neon-pink: #ff10f0;
+            --neon-blue: #00f0ff;
+            --neon-orange: #ff6600;
+            --neon-purple: #bf00ff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #000, #1a0033, #003333, #1a0033, #000);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 30px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(57, 255, 20, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 0 10px var(--neon-green));
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-green);
+            text-shadow: 0 0 20px var(--neon-green);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 40px 60px;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 80px;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-pink), var(--neon-blue), var(--neon-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300%;
+            animation: titleShift 5s ease infinite;
+        }
+
+        @keyframes titleShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Artist Section */
+        .artist-section {
+            display: flex;
+            gap: 60px;
+            margin-bottom: 120px;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .artist-section:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .artist-image-container {
+            flex: 0 0 400px;
+            position: relative;
+        }
+
+        .artist-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 3px solid var(--neon-green);
+            box-shadow: 0 0 40px rgba(57, 255, 20, 0.5);
+            transition: all 0.3s;
+        }
+
+        .artist-section:nth-child(even) .artist-image {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 40px rgba(255, 16, 240, 0.5);
+        }
+
+        .artist-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 60px currentColor;
+        }
+
+        .artist-icon-fallback {
+            width: 100%;
+            height: 400px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 10rem;
+            border-radius: 20px;
+            border: 3px solid var(--neon-green);
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(255, 16, 240, 0.1));
+        }
+
+        .artist-section:nth-child(even) .artist-icon-fallback {
+            border-color: var(--neon-pink);
+            background: linear-gradient(135deg, rgba(255, 16, 240, 0.1), rgba(0, 240, 255, 0.1));
+        }
+
+        .artist-content {
+            flex: 1;
+        }
+
+        .artist-header {
+            margin-bottom: 20px;
+        }
+
+        .artist-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: var(--neon-green);
+            text-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .artist-section:nth-child(even) .artist-name {
+            color: var(--neon-pink);
+            text-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        .artist-role {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 15px var(--neon-blue);
+            margin-bottom: 30px;
+        }
+
+        .artist-description {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .artist-description p {
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: var(--neon-green);
+            font-weight: 700;
+        }
+
+        .artist-section:nth-child(even) .highlight {
+            color: var(--neon-pink);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .page-title {
+                font-size: 3rem;
+            }
+
+            .artist-section {
+                flex-direction: column !important;
+                gap: 30px;
+            }
+
+            .artist-image-container {
+                flex: 0 0 auto;
+                width: 100%;
+            }
+
+            .artist-image,
+            .artist-icon-fallback {
+                height: 300px;
+            }
+
+            .artist-name {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="pics/TAWLogo.png" alt="Accidental Watermelon Logo" class="logo-img" onerror="this.style.display='none';">
+                <span class="logo-text">ACCIDENTAL WATERMELON</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="page-title">THE ACCIDENTAL WATERMELON</h1>
+
+        <!-- Playboi Bingi -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/Playboi_Bingi.png" alt="Playboi Bingi" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">🎤</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">PLAYBOI BINGI</h2>
+                    <p class="artist-role">The Architect • Head Honcho</p>
+                </div>
+                <div class="artist-description">
+                    <p>If The Accidental Watermelon has a north star, it's <span class="highlight">Playboi Bingi</span>. The undisputed head of operations, Bingi isn't just the face of TAW—he's the engine, the vision, and the relentless creative force that keeps everything moving forward.</p>
+
+                    <p>With more releases under his belt than anyone else in the crew, Bingi has built a catalog that speaks to his <span class="highlight">unwavering dedication to the craft</span>. While others come and go, experiment and dabble, Bingi is out here dropping track after track, project after project, each one a testament to his commitment to pushing the sound forward. He doesn't just make music—he lives it, breathes it, becomes it.</p>
+
+                    <p>As the head honcho, Bingi sets the standard for the entire operation. He's the one who laid down the blueprint, established the vibe, and continues to lead by example. His work ethic is legendary within the group, constantly grinding in the studio, refining his sound, and elevating TAW to new heights. When you listen to a Playboi Bingi track, you're hearing the sound of someone who's <span class="highlight">all in</span>—no half measures, no shortcuts, just pure artistic vision executed with precision.</p>
+
+                    <p>In a collective full of unique voices and wild personalities, Bingi is the anchor. The one everyone looks to. The architect of the Accidental Watermelon empire. Long may he reign.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fop-Shvrt -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/Fop-Shvrt.png" alt="Fop-Shvrt" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">👕</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">FOP-SHVRT</h2>
+                    <p class="artist-role">The Manager • Behind The Scenes Mastermind</p>
+                </div>
+                <div class="artist-description">
+                    <p>Every empire needs a strategist, and for The Accidental Watermelon, that's <span class="highlight">Fop-Shvrt</span>. While he might not have a solo discography packed with releases, don't let that fool you—this man is the invisible hand guiding the entire operation from the shadows.</p>
+
+                    <p>As the group's manager, Fop-Shvrt handles <span class="highlight">everything</span> that doesn't involve stepping up to the mic solo. Social media? That's him. Album covers that make you do a double-take? Fop-Shvrt. Song titles that hit just right? You guessed it. Profile management, branding, visual identity—all of it flows through his creative vision. He's the one making sure TAW looks as good as it sounds.</p>
+
+                    <p>But don't think he's completely absent from the music itself. Fop-Shvrt pops up on <span class="highlight">rare vocal features</span>, blessing tracks with his presence when the moment calls for it. These appearances are strategic, calculated, and always impactful—because when Fop-Shvrt steps to the mic, you know it's going to mean something.</p>
+
+                    <p>He's the glue that holds the chaos together, the professional in a room full of wildcards, the man who makes sure the train stays on the tracks even when everyone else is trying to derail it for fun. Without Fop-Shvrt, The Accidental Watermelon would still make great music—but it wouldn't look this damn good doing it.</p>
+
+                    <p>Respect the architect behind the architecture. Respect the manager. Respect <span class="highlight">Fop-Shvrt</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- THA BIG J -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/THA_BIG_J.png" alt="THA BIG J" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">👑</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">THA BIG J</h2>
+                    <p class="artist-role">The True OG • First One Out The Gate</p>
+                </div>
+                <div class="artist-description">
+                    <p>Let's get one thing straight: <span class="highlight">THA BIG J</span> is the true OG of The Accidental Watermelon. Not the oldest, not the most prolific, but the <span class="highlight">first</span>. The one who kicked the door down and showed everyone else it could be done.</p>
+
+                    <p>As the youngest member of the operation, Big J came into the game with something to prove. And prove it he did—by being the first to drop music, setting the tone and paving the way for everyone who followed. While others were still figuring out their sound, Big J was already out there making moves, laying down the foundation that TAW would be built on.</p>
+
+                    <p>But here's the thing about Big J: he's not trying to be some untouchable legend. He's raw, unfiltered, and unapologetically himself. Case in point? He's <span class="highlight">notorious for saying he farted in his pants</span>. And you know what? That's exactly the kind of chaotic energy that defines TAW. No pretense, no posturing—just pure, uncut authenticity.</p>
+
+                    <p>Big J represents the spirit of the collective: young, fearless, and willing to say what everyone else is thinking. He didn't wait for permission. He didn't wait for the "right time." He just <span class="highlight">went</span>. And because of that, the rest of the crew had a path to follow.</p>
+
+                    <p>Respect your elders? Nah. Respect <span class="highlight">THA BIG J</span>—the youngest and the boldest.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BabyMagic -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/BabyMagic.png" alt="BabyMagic" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">✨</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">BABYMAGIC</h2>
+                    <p class="artist-role">The Phantom • The Underdog • Pure Aura</p>
+                </div>
+                <div class="artist-description">
+                    <p>Here's what we know about <span class="highlight">BabyMagic</span>: absolutely nothing. And somehow, that makes them the most intriguing member of the entire collective.</p>
+
+                    <p>No one has seen them. Not in person, not on camera, not even in a grainy screenshot from a Discord call. They exist purely as an <span class="highlight">idea</span>, a phantom presence that looms over TAW with an energy so magnetic you can practically feel it through the screen. They haven't released a single track, haven't dropped a single verse, haven't made a single public appearance—and yet their legend only grows.</p>
+
+                    <p>But here's the thing: <span class="highlight">the aura is immaculate</span>. You don't need to hear the music to know BabyMagic has it. You don't need to see them to understand that when they finally do show up, it's going to be a moment. Everything about them radiates potential, mystery, and an almost supernatural cool that can't be manufactured.</p>
+
+                    <p>And the style? Don't even get us started. Reports suggest that BabyMagic's fashion sense is <span class="highlight">stunning</span>—the kind of drip that makes you reconsider your entire wardrobe. They're the underdog who hasn't even stepped into the ring yet, and people are already betting on them to win.</p>
+
+                    <p>BabyMagic is the embodiment of anticipation. They're the calm before the storm, the silence before the symphony, the mystery that keeps you coming back for more. And when they're ready to reveal themselves? The game won't know what hit it.</p>
+
+                    <p>Until then, we wait. And we believe in the <span class="highlight">magic</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Joey Fata$$ -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/Joey_Fata$$.png" alt="Joey Fata$$" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">💰</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">JOEY FATA$$</h2>
+                    <p class="artist-role">The Moneymaker • Certified Banger Machine</p>
+                </div>
+                <div class="artist-description">
+                    <p>When it comes to <span class="highlight">Joey Fata$$</span>, there's only one thing you need to know: every single track is a certified banger. No filler, no misses, no questionable deep cuts that make you skip. Just hit after hit after hit.</p>
+
+                    <p>Joey doesn't make music—he makes <span class="highlight">currency</span>. Every beat is an investment, every verse is a deposit, and every hook is pure profit. He approaches the craft with the mindset of a businessman, stacking tracks like someone else stacks bills. And the results speak for themselves: when Joey drops, people listen. When Joey drops, people pay attention. When Joey drops, <span class="highlight">people spend</span>.</p>
+
+                    <p>But it's not just about the numbers (even though the numbers are insane). It's about the consistency, the reliability, the knowing that when you press play on a Joey Fata$$ track, you're going to get exactly what you came for: <span class="highlight">pure, uncut fire</span>. No experimental nonsense, no avant-garde detours—just straight-up heat that hits from the first second to the last.</p>
+
+                    <p>Joey Fata$$ is the moneymaker for a reason. He's the one you can count on to deliver, the one who understands that in this game, your reputation is only as good as your last release. And with Joey? The last release is always a <span class="highlight">banger</span>.</p>
+
+                    <p>Stacking hits like currency. Living up to the name. Making everyone else look broke in comparison. That's <span class="highlight">Joey Fata$$</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lil Sperm Cell -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/Lil_Sperm_Cell.png" alt="Lil Sperm Cell" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">🔬</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">LIL SPERM CELL</h2>
+                    <p class="artist-role">Vocaloid Virtuoso • Hatsune Miku Extraordinaire</p>
+                </div>
+                <div class="artist-description">
+                    <p>In a world full of human voices, <span class="highlight">Lil Sperm Cell</span> said "nah" and went digital. Every single track, every single verse, every single vocal you hear from this enigmatic artist comes straight from the synthetic pipes of <span class="highlight">Hatsune Miku</span>.</p>
+
+                    <p>Now, you might be wondering: why Hatsune Miku? Why vocaloid? Why commit so fully to a digital voice when human vocals are right there? And to that, Lil Sperm Cell would probably just shrug and drop another track. Because that's the thing about a true artist—they don't need to explain their vision. They just <span class="highlight">execute it</span>.</p>
+
+                    <p>As for the name? Nobody knows. Seriously. <span class="highlight">No one knows why he calls himself Lil Sperm Cell</span>. It's one of the great mysteries of The Accidental Watermelon, right up there with "What does BabyMagic actually look like?" and "Did Big J really fart in his pants or is it just legend?" But here's the thing: it doesn't matter. Because what Lil Sperm Cell lacks in conventional explanations, he makes up for in pure <span class="highlight">vocaloid mastery</span>.</p>
+
+                    <p>This man has taken Hatsune Miku and turned her into an instrument of pure artistic expression. The way he manipulates the vocals, the way he crafts melodies, the way he makes digital sound <span class="highlight">more human than actual humans</span>—it's nothing short of wizardry. He's not just using vocaloid software; he's conducting a symphony with it.</p>
+
+                    <p>Lil Sperm Cell represents the future of music: boundless, digital, and utterly unrestrained by the limitations of the human voice. And honestly? The future sounds pretty damn good.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nitsu -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/nitsu.png" alt="nitsu" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">🌙</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">NITSU</h2>
+                    <p class="artist-role">The Enigma • The Void • The Unknown</p>
+                </div>
+                <div class="artist-description">
+                    <p><span class="highlight">No one knows anything about nitsu.</span></p>
+
+                    <p>Seriously. That's it. That's the whole story.</p>
+
+                    <p>There's nothing to say because there's nothing <span class="highlight">to</span> say. No backstory, no origin myth, no carefully crafted persona. Just... nitsu. Existing somewhere in the void between reality and the internet, dropping in and out of TAW's orbit like a ghost.</p>
+
+                    <p>Is nitsu even real? Who knows. Does nitsu make music? Maybe. Has anyone ever actually interacted with nitsu in a meaningful way? <span class="highlight">Unclear</span>.</p>
+
+                    <p>What we do know is that nitsu is part of The Accidental Watermelon, which means something. But what that something is? Your guess is as good as ours. Maybe nitsu is a person. Maybe nitsu is a concept. Maybe nitsu is just the lowercase aesthetic personified, refusing to explain itself because capital letters are too mainstream.</p>
+
+                    <p>In a collective full of larger-than-life personalities and wild characters, nitsu is the void. The silence. The question mark at the end of every sentence. And honestly? That might be the most punk rock thing of all.</p>
+
+                    <p>There's nothing to say about nitsu. And maybe that's exactly the point.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- digitalestrogen -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/digitalestrogen.png" alt="digitalestrogen" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">⚡</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">DIGITALESTROGEN</h2>
+                    <p class="artist-role">The Real Deal • Multi-Instrumentalist • Most Genuine</p>
+                </div>
+                <div class="artist-description">
+                    <p>In a group where mystery, chaos, and absurdist humor reign supreme, <span class="highlight">digitalestrogen</span> stands out for one simple reason: authenticity.</p>
+
+                    <p>Dubbed the <span class="highlight">most genuine member</span> of The Accidental Watermelon, digitalestrogen doesn't need gimmicks, personas, or wild antics to make an impact. The music speaks for itself—because digitalestrogen can actually play it. We're talking real instruments. Multiple instruments. The kind of musical versatility that makes you realize she isn't just talented; she's a <span class="highlight">complete artist</span>.</p>
+
+                    <p>As a producer, digitalestrogen crafts beats with the precision of someone who understands music theory, composition, and sound design on a fundamental level. But it doesn't stop there. Jump on a track and you'll hear vocals that can tear the roof off—raw, emotional, and delivered with a level of skill that makes it clear she isn't just playing around. This is someone who <span class="highlight">lives for the craft</span>.</p>
+
+                    <p>What sets digitalestrogen apart is the lack of pretense. No inflated ego, no manufactured mystique, just pure dedication to making great music. In a scene where everyone's trying to be the wildest, loudest, or most outrageous, digitalestrogen is content to be the <span class="highlight">best</span>.</p>
+
+                    <p>And that's what makes her invaluable to TAW. While others bring the chaos and the spectacle, digitalestrogen brings the foundation. The musicality. The heart. The reminder that at the end of the day, it's all about the <span class="highlight">music</span>.</p>
+
+                    <p>The real deal. The multi-instrumentalist. The most genuine. <span class="highlight">digitalestrogen</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- J Dynasty -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/J_Dynasty.png" alt="J Dynasty" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">🏛️</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">J DYNASTY</h2>
+                    <p class="artist-role">The Trailblazer • The Outlier • The Legend</p>
+                </div>
+                <div class="artist-description">
+                    <p><span class="highlight">J Dynasty</span> is the outlier. The one who didn't follow the path—he created it.</p>
+
+                    <p>While the rest of The Accidental Watermelon was still figuring out how to navigate the digital music landscape, J Dynasty was already on Spotify, Apple Music, and every other major DSP you can think of. He wasn't just ahead of the curve; he <span class="highlight">was the curve</span>. The first one to make it onto a proper distribution platform, proving that TAW wasn't just some internet collective—it was a real, legitimate movement.</p>
+
+                    <p>And that inspiration? It rippled through the entire crew. Playboi Bingi saw what J Dynasty was doing and thought, "Yeah, I can do that too." THA BIG J followed suit. And just like that, J Dynasty had <span class="highlight">changed the game</span> for everyone. He showed them what was possible, gave them a blueprint, and watched as they all leveled up because of it.</p>
+
+                    <p>But J Dynasty's legacy isn't just about being first. It's also about the drama, the history, the <span class="highlight">notorious past with MR Steal Yo Girl</span> (aka mitchielmao). The details? Classified. The vibes? Legendary. The impact on TAW lore? Immeasurable. It's the kind of backstory that adds layers to an already fascinating character, the kind of chapter in the TAW story that people whisper about but never fully explain.</p>
+
+                    <p>J Dynasty is proof that being an outlier isn't a weakness—it's a <span class="highlight">superpower</span>. He carved his own lane, inspired a generation of TAW artists, and left a mark that will never be forgotten.</p>
+
+                    <p>The trailblazer. The legend. <span class="highlight">J Dynasty</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sulpa Boy -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/Sulpa_Boy.png" alt="Sulpa Boy" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">🌊</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">SULPA BOY</h2>
+                    <p class="artist-role">The Producer • Former Independent • Beat Maker</p>
+                </div>
+                <div class="artist-description">
+                    <p>Before joining The Accidental Watermelon, <span class="highlight">Sulpa Boy</span> was doing her own thing as an independent artist. Solo grind, solo vision, solo everything. But when she linked up with TAW, something clicked. Now she's out here collaborating with heavyweights like <span class="highlight">digitalestrogen and Playboi Bingi</span>, bringing her unique sound into the collective's ever-expanding universe.</p>
+
+                    <p>Sulpa Boy is a <span class="highlight">double threat</span>: she makes beats and delivers vocals with equal precision. Whether she's crafting a hard-hitting instrumental or laying down a verse, she brings that same DIY energy that defined her independent days. She's proof that you can transition from solo artist to collaborative powerhouse without losing your identity in the process.</p>
+
+                    <p>Her production style is sharp, her vocal delivery is fierce, and her ability to seamlessly blend both makes her an <span class="highlight">invaluable asset</span> to TAW. She's not just making music—she's crafting complete sonic experiences, handling every aspect of the creative process with confidence and skill.</p>
+
+                    <p>And her taste? Impeccable. Sulpa Boy is a <span class="highlight">huge fan of Joey Valence & Brae</span> and other miscellaneous twinks who dominate her playlists. She's got a specific vibe she gravitates toward, and she's unapologetic about it. This sharp musical taste bleeds into her own work, creating a sound that's distinctly hers while still fitting perfectly within the TAW universe.</p>
+
+                    <p>Named after Soulja Boy for a reason, Sulpa Boy channels that same entrepreneurial, boundary-pushing energy. She's the hustler, the collaborator, the multi-talented artist who elevates every project she touches. Respect the grind. Respect the beats. Respect <span class="highlight">Sulpa Boy</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lil Peaka -->
+        <div class="artist-section">
+            <div class="artist-image-container">
+                <img src="pics/Lil_Peaka.png" alt="Lil Peaka" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="artist-icon-fallback">🔥</div>
+            </div>
+            <div class="artist-content">
+                <div class="artist-header">
+                    <h2 class="artist-name">LIL PEAKA</h2>
+                    <p class="artist-role">The Mystery • One Verse Wonder • That's It</p>
+                </div>
+                <div class="artist-description">
+                    <p>What is there to say about <span class="highlight">Lil Peaka</span>?</p>
+
+                    <p>He has one verse. On a Playboi Bingi track. That's it. That's literally the entire story.</p>
+
+                    <p>No one knows where he came from. No one knows what he's been up to since. No one knows if he's working on new music, retired from the game, or just vibing in complete obscurity. <span class="highlight">No one knows anything</span>.</p>
+
+                    <p>And honestly? That one verse might not even be that memorable. We're not here to hype it up or pretend it was some groundbreaking moment in TAW history. It was a verse. On a track. By Bingi. Featuring Lil Peaka. End of story.</p>
+
+                    <p>But here's the thing: Lil Peaka is part of The Accidental Watermelon. And that means something, even if that something is incredibly minimal. He's the reminder that not everyone in the crew needs to be a main character. Some people are just... <span class="highlight">there</span>. Contributing their one verse and then fading back into the ether.</p>
+
+                    <p>Is Lil Peaka planning a comeback? Probably not. Will he drop a surprise project that shocks the world? Highly unlikely. Will anyone remember him in five years? Honestly, probably not that either.</p>
+
+                    <p>But for now, he's in the lineup. He's on the website. He's got his picture and his bio just like everyone else. And that's about as much energy as we're willing to dedicate to <span class="highlight">Lil Peaka</span>.</p>
+
+                    <p>Moving on.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

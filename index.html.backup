@@ -1,0 +1,997 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ACCIDENTAL WATERMELON <I | Premium Music Label</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Righteous&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-green: #39ff14;
+            --neon-pink: #ff10f0;
+            --neon-blue: #00f0ff;
+            --neon-orange: #ff6600;
+            --neon-purple: #bf00ff;
+            --neon-yellow: #ffff00;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: auto;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            display: none;
+        }
+
+        .cursor-follower {
+            display: none;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #000, #1a0033, #003333, #1a0033, #000);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 20s infinite;
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 30px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(57, 255, 20, 0.3);
+            animation: slideDown 1s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: logoGlow 3s ease infinite;
+            text-shadow: 0 0 30px rgba(57, 255, 20, 0.5);
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { filter: brightness(1) hue-rotate(0deg); }
+            50% { filter: brightness(1.5) hue-rotate(30deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-green);
+            text-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-green);
+            transition: width 0.3s;
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-pink), var(--neon-blue), var(--neon-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleFloat 3s ease-in-out infinite, chromatic 5s ease infinite;
+            text-shadow: 0 0 50px rgba(57, 255, 20, 0.8);
+            background-size: 300%;
+            max-width: 90%;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes chromatic {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(90deg); }
+        }
+
+        .hero-subtitle {
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: var(--neon-pink);
+            text-shadow: 0 0 30px var(--neon-pink);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .watermelon {
+            font-size: 4rem;
+            animation: spin3d 10s linear infinite, colorShift 5s ease infinite;
+            display: inline-block;
+            filter: drop-shadow(0 0 30px var(--neon-green));
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin3d {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        @keyframes colorShift {
+            0%, 100% { filter: drop-shadow(0 0 30px var(--neon-green)) hue-rotate(0deg); }
+            50% { filter: drop-shadow(0 0 50px var(--neon-pink)) hue-rotate(180deg); }
+        }
+
+        .cta-button {
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid var(--neon-green);
+            background: transparent;
+            color: var(--neon-green);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s;
+            box-shadow: 0 0 30px var(--neon-green);
+            animation: buttonPulse 2s ease infinite;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% { box-shadow: 0 0 30px var(--neon-green); }
+            50% { box-shadow: 0 0 60px var(--neon-green), 0 0 90px var(--neon-green); }
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--neon-green);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+            border-radius: 50%;
+        }
+
+        .cta-button:hover::before {
+            width: 300%;
+            height: 500%;
+        }
+
+        .cta-button:hover {
+            color: #000;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 60px var(--neon-pink);
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Artists Section */
+        .artists {
+            padding: 60px 30px;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease infinite;
+            text-shadow: 0 0 40px rgba(255, 16, 240, 0.5);
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.5); }
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .artist-card {
+            position: relative;
+            height: 320px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .artist-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .artist-card:hover .artist-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .artist-card-front,
+        .artist-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            overflow: hidden;
+        }
+
+        .artist-card-front {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(255, 16, 240, 0.1));
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 40px rgba(57, 255, 20, 0.3);
+            animation: cardFloat 3s ease-in-out infinite;
+        }
+
+        .artist-card:nth-child(even) .artist-card-front {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 40px rgba(255, 16, 240, 0.3);
+            background: linear-gradient(135deg, rgba(255, 16, 240, 0.1), rgba(0, 240, 255, 0.1));
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .artist-card-front::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .artist-card-back {
+            background: linear-gradient(135deg, rgba(255, 16, 240, 0.2), rgba(0, 240, 255, 0.2));
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 40px rgba(255, 16, 240, 0.5);
+            transform: rotateY(180deg);
+        }
+
+        .artist-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .artist-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid var(--neon-green);
+            box-shadow: 0 0 30px var(--neon-green);
+            animation: imageFloat 3s ease-in-out infinite, imageGlow 2s ease-in-out infinite;
+        }
+
+        .artist-card:nth-child(even) .artist-image {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 30px var(--neon-pink);
+        }
+
+        @keyframes imageFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        @keyframes imageGlow {
+            0%, 100% { filter: brightness(1) saturate(1); }
+            50% { filter: brightness(1.2) saturate(1.3); }
+        }
+
+        .artist-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px currentColor;
+            color: var(--neon-green);
+        }
+
+        .artist-card:nth-child(even) .artist-name {
+            color: var(--neon-pink);
+        }
+
+        .artist-title {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .artist-bio {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            text-align: center;
+            color: #fff;
+            padding: 0 10px;
+        }
+
+        .artist-social {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--neon-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2) rotate(360deg);
+            box-shadow: 0 0 40px var(--neon-blue);
+        }
+
+        /* About Section */
+        .about {
+            padding: 60px 30px;
+            background: linear-gradient(180deg, transparent, rgba(57, 255, 20, 0.05), transparent);
+            position: relative;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-content::before {
+            content: '<I';
+            position: absolute;
+            top: -50px;
+            left: -100px;
+            font-size: 15rem;
+            opacity: 0.05;
+            animation: rotateWatermelon 20s linear infinite;
+        }
+
+        @keyframes rotateWatermelon {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+            color: var(--neon-pink);
+            font-weight: 700;
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px var(--neon-blue), -2px -2px var(--neon-green); }
+            25% { text-shadow: -2px 2px var(--neon-green), 2px -2px var(--neon-pink); }
+            50% { text-shadow: 2px -2px var(--neon-pink), -2px 2px var(--neon-blue); }
+            75% { text-shadow: -2px -2px var(--neon-blue), 2px 2px var(--neon-green); }
+            100% { text-shadow: 2px 2px var(--neon-blue), -2px -2px var(--neon-green); }
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px;
+            text-align: center;
+            border-top: 2px solid rgba(57, 255, 20, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: var(--neon-green);
+            text-decoration: none;
+            font-size: 2rem;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            transform: scale(1.3) rotate(15deg);
+            filter: drop-shadow(0 0 20px currentColor);
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-pink), var(--neon-blue));
+            z-index: 10000;
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .artists-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo {
+                font-size: 1rem;
+            }
+
+            .artist-card {
+                height: 280px;
+            }
+
+            .watermelon {
+                font-size: 3rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+
+        .loading-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: loadingPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading">
+        <div class="loading-text">THE ACCIDENTAL WATERMELON <I</div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+
+    <!-- Floating Particles -->
+    <script>
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            document.body.appendChild(particle);
+        }
+    </script>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo"><I ACCIDENTAL WATERMELON</div>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#artists">ARTISTS</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="watermelon"><I</div>
+        <h1 class="hero-title">THE ACCIDENTAL WATERMELON</h1>
+        <p class="hero-subtitle">Premium Music Label " Infinite Vibes</p>
+        <button class="cta-button"><span>DISCOVER THE SOUND</span></button>
+    </section>
+
+    <!-- Artists Section -->
+    <section class="artists" id="artists">
+        <h2 class="section-title">OUR ARTISTS</h2>
+        <div class="artists-grid">
+            <!-- Artist 1 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <div class="artist-icon"><�</div>
+                        <h3 class="artist-name">PLAYBOI BINGI</h3>
+                        <p class="artist-title">The Architect</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Crafting sonic landscapes that transcend dimensions. The visionary behind the sound.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 2 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/Fop-Shvrt.png" alt="Fop-Shvrt" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">=U</div>
+                        <h3 class="artist-name">FOP-SHVRT</h3>
+                        <p class="artist-title">Style Maven</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Where fashion meets frequency. Dripping in both style and substance.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 3 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/THA_BIG_J.png" alt="THA BIG J" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">=Q</div>
+                        <h3 class="artist-name">THA BIG J</h3>
+                        <p class="artist-title">The Colossus</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Larger than life beats that shake the foundation. Pure unadulterated energy.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 4 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/BabyMagic.png" alt="BabyMagic" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">(</div>
+                        <h3 class="artist-name">BABYMAGIC</h3>
+                        <p class="artist-title">The Enchanter</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Spellbinding melodies that captivate the soul. Pure musical sorcery.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 5 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/Joey_Fata$$.png" alt="Joey Fata$$" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">=�</div>
+                        <h3 class="artist-name">JOEY FATA$$</h3>
+                        <p class="artist-title">Money Magnet</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Stacking hits like currency. Every track is a certified banger.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 6 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/Lil_Sperm_Cell.png" alt="Lil Sperm Cell" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">=,</div>
+                        <h3 class="artist-name">LIL SPERM CELL</h3>
+                        <p class="artist-title">Microscopic Giant</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Small in name, massive in impact. The future of sound starts here.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 7 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <div class="artist-icon"><</div>
+                        <h3 class="artist-name">NITSU</h3>
+                        <p class="artist-title">Night Rider</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Nocturnal vibes for the underground elite. When the sun sets, nitsu rises.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 8 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/digitalestrogen.png" alt="digitalestrogen" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">�</div>
+                        <h3 class="artist-name">DIGITALESTROGEN</h3>
+                        <p class="artist-title">Cyber Shaman</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Fusing the digital with the ethereal. Code meets consciousness.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 9 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <div class="artist-icon"><�</div>
+                        <h3 class="artist-name">J DYNASTY</h3>
+                        <p class="artist-title">The Sovereign</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Building an empire one verse at a time. Royalty in the making.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 10 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <div class="artist-icon"><
+</div>
+                        <h3 class="artist-name">SULPA BOY</h3>
+                        <p class="artist-title">Wave Maker</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Riding the currents of creativity. Making waves in uncharted waters.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 11 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/Lil_Peaka.png" alt="Lil Peaka" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">=%</div>
+                        <h3 class="artist-name">LIL PEAKA</h3>
+                        <p class="artist-title">Summit Seeker</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Always reaching new heights. The peak is just the beginning.</p>
+                        <div class="artist-social">
+                            <div class="social-icon"><�</div>
+                            <div class="social-icon">=�</div>
+                            <div class="social-icon"><�</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">THE MOVEMENT</h2>
+        <div class="about-content">
+            <p>
+                Welcome to <span class="glitch-text">THE ACCIDENTAL WATERMELON</span>, where music transcends boundaries and creativity knows no limits.
+                We're not just a labelwe're a <span class="glitch-text">revolution</span>.
+            </p>
+            <p style="margin-top: 30px;">
+                Born from spontaneity, driven by passion, and fueled by pure artistic energy,
+                we represent the next generation of sound. Our artists don't follow trendsthey <span class="glitch-text">create</span> them.
+            </p>
+            <p style="margin-top: 30px;">
+                From the underground to the stratosphere, we're building something <span class="glitch-text">legendary</span>.
+                Join us on this journey. The future sounds good. <I
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <p style="font-family: 'Orbitron', sans-serif; font-size: 2rem; margin-bottom: 20px;">
+                GET IN TOUCH
+            </p>
+            <p>For bookings, collaborations, and inquiries:</p>
+            <p style="color: var(--neon-green); font-size: 1.5rem; margin-top: 10px;">
+                contact@accidentalwatermelon.com
+            </p>
+        </div>
+        <div class="footer-links">
+            <a href="#" title="Instagram">=�</a>
+            <a href="#" title="Twitter">=&</a>
+            <a href="#" title="SoundCloud"></a>
+            <a href="#" title="Spotify"><�</a>
+            <a href="#" title="YouTube">=�</a>
+        </div>
+        <p style="margin-top: 40px; opacity: 0.7;">
+            � 2025 The Accidental Watermelon. All Rights Reserved.
+        </p>
+    </footer>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.width = scrollPercentage + '%';
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add random colors to particles
+        document.querySelectorAll('.particle').forEach((particle, index) => {
+            const colors = ['var(--neon-green)', 'var(--neon-pink)', 'var(--neon-blue)', 'var(--neon-orange)', 'var(--neon-purple)'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.background = randomColor;
+            particle.style.boxShadow = `0 0 10px ${randomColor}`;
+        });
+
+        // Interactive button effect
+        const ctaButton = document.querySelector('.cta-button');
+        ctaButton.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+        });
+        ctaButton.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    </script>
+</body>
+</html>

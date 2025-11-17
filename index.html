@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ACCIDENTAL WATERMELON | Premium Music Label</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Righteous&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-green: #39ff14;
+            --neon-pink: #ff10f0;
+            --neon-blue: #00f0ff;
+            --neon-orange: #ff6600;
+            --neon-purple: #bf00ff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #000, #1a0033, #003333, #1a0033, #000);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 30px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(57, 255, 20, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 0 10px var(--neon-green));
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-green);
+            text-shadow: 0 0 20px var(--neon-green);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 20px 50px;
+        }
+
+        .watermelon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: spin3d 10s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin3d {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-pink), var(--neon-blue), var(--neon-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300%;
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-subtitle {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--neon-pink);
+            text-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        .cta-button {
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid var(--neon-green);
+            background: transparent;
+            color: var(--neon-green);
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .cta-button:hover {
+            background: var(--neon-green);
+            color: #000;
+        }
+
+        /* Artists Section */
+        .artists {
+            padding: 60px 30px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .artist-card {
+            position: relative;
+            height: 320px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .artist-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .artist-card:hover .artist-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .artist-card-front,
+        .artist-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .artist-card-front {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(255, 16, 240, 0.1));
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        .artist-card:nth-child(even) .artist-card-front {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 30px rgba(255, 16, 240, 0.3);
+            background: linear-gradient(135deg, rgba(255, 16, 240, 0.1), rgba(0, 240, 255, 0.1));
+        }
+
+        .artist-card-back {
+            background: linear-gradient(135deg, rgba(255, 16, 240, 0.2), rgba(0, 240, 255, 0.2));
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 30px rgba(255, 16, 240, 0.5);
+            transform: rotateY(180deg);
+        }
+
+        .artist-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .artist-card:nth-child(even) .artist-image {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        .artist-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .artist-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            text-shadow: 0 0 15px currentColor;
+            color: var(--neon-green);
+        }
+
+        .artist-card:nth-child(even) .artist-name {
+            color: var(--neon-pink);
+        }
+
+        .artist-title {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .artist-bio {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            text-align: center;
+            color: #fff;
+        }
+
+        /* About Section */
+        .about {
+            padding: 60px 30px;
+            background: linear-gradient(180deg, transparent, rgba(57, 255, 20, 0.05), transparent);
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .glitch-text {
+            color: var(--neon-pink);
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px;
+            text-align: center;
+            border-top: 2px solid rgba(57, 255, 20, 0.3);
+        }
+
+        .footer-content {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .artists-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="pics/TAWLogo.png" alt="Accidental Watermelon Logo" class="logo-img" onerror="this.style.display='none';">
+                <span class="logo-text">ACCIDENTAL WATERMELON</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="#artists">ARTISTS</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="watermelon">🍉</div>
+        <h1 class="hero-title">THE ACCIDENTAL WATERMELON</h1>
+        <p class="hero-subtitle">Premium Music Label • Infinite Vibes</p>
+        <button class="cta-button"><span>DISCOVER THE SOUND</span></button>
+    </section>
+
+    <!-- Artists Section -->
+    <section class="artists" id="artists">
+        <h2 class="section-title">OUR ARTISTS</h2>
+        <div class="artists-grid">
+            <!-- Artist 1 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/Playboi_Bingi.png" alt="Playboi Bingi" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">🎤</div>
+                        <h3 class="artist-name">PLAYBOI BINGI</h3>
+                        <p class="artist-title">The Architect</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Head honcho of TAW. The most prolific artist in the operation, dedicated to his craft with countless releases under his belt.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 2 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/Fop-Shvrt.png" alt="Fop-Shvrt" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">👕</div>
+                        <h3 class="artist-name">FOP-SHVRT</h3>
+                        <p class="artist-title">Style Maven</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">The manager. Runs the show behind the scenes—social media, song titles, album covers, profile management, and rare vocal features.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 3 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/THA_BIG_J.png" alt="THA BIG J" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">👑</div>
+                        <h3 class="artist-name">THA BIG J</h3>
+                        <p class="artist-title">The Colossus</p>
+                    </div>
+
+                    <div class="artist-card-back">
+                        <p class="artist-bio">The true OG. Youngest member and the first to drop music. Notorious for saying he farted in his pants.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 4 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/BabyMagic.png" alt="BabyMagic" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">✨</div>
+                        <h3 class="artist-name">BABYMAGIC</h3>
+                        <p class="artist-title">The Enchanter</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">The underdog. No one has seen him. Nothing released yet. But the aura? Immaculate. The style? Stunning.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 5 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/Joey_Fata$$.png" alt="Joey Fata$$" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">💰</div>
+                        <h3 class="artist-name">JOEY FATA$$</h3>
+                        <p class="artist-title">Money Magnet</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Stacking hits like currency. Every track is a certified banger.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 6 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/Lil_Sperm_Cell.png" alt="Lil Sperm Cell" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">🔬</div>
+                        <h3 class="artist-name">LIL SPERM CELL</h3>
+                        <p class="artist-title">Microscopic Giant</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Hatsune Miku extraordinaire. Vocaloid master. No one knows why the name, but the vocals? Pure digital perfection.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 7 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/nitsu.png" alt="nitsu" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">🌙</div>
+                        <h3 class="artist-name">NITSU</h3>
+                        <p class="artist-title">Night Rider</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">No one knows anything about nitsu. There's nothing to say.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 8 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/digitalestrogen.png" alt="digitalestrogen" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">⚡</div>
+                        <h3 class="artist-name">DIGITALESTROGEN</h3>
+                        <p class="artist-title">Cyber Shaman</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Most genuine member. Multi-instrumentalist producer who can tear up vocals. The real deal.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 9 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/J_Dynasty.png" alt="J Dynasty" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">🏛️</div>
+                        <h3 class="artist-name">J DYNASTY</h3>
+                        <p class="artist-title">The Sovereign</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">The outlier. First on a proper DSP, inspired Bingi and Big J to hit Spotify. Notorious past with MR Steal Yo Girl.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 10 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/Sulpa_Boy.png" alt="Sulpa Boy" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">🌊</div>
+                        <h3 class="artist-name">SULPA BOY</h3>
+                        <p class="artist-title">Wave Maker</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Former independent artist turned TAW collaborator. Makes beats and vocals. Joey Valence & Brae enthusiast.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 11 -->
+            <div class="artist-card">
+                <div class="artist-card-inner">
+                    <div class="artist-card-front">
+                        <img src="pics/Lil_Peaka.png" alt="Lil Peaka" class="artist-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="artist-icon" style="display:none;">🔥</div>
+                        <h3 class="artist-name">LIL PEAKA</h3>
+                        <p class="artist-title">Summit Seeker</p>
+                    </div>
+                    <div class="artist-card-back">
+                        <p class="artist-bio">Has one verse on a Bingi track. That's literally all anyone knows. Moving on.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">THE MOVEMENT</h2>
+        <div class="about-content">
+            <p>
+                Welcome to <span class="glitch-text">THE ACCIDENTAL WATERMELON</span>, where music transcends boundaries and creativity knows no limits.
+                We're not just a label—we're a <span class="glitch-text">revolution</span>.
+            </p>
+            <p style="margin-top: 30px;">
+                Born from spontaneity, driven by passion, and fueled by pure artistic energy,
+                we represent the next generation of sound. Our artists don't follow trends—they <span class="glitch-text">create</span> them.
+            </p>
+            <p style="margin-top: 30px;">
+                From the underground to the stratosphere, we're building something <span class="glitch-text">legendary</span>.
+                Join us on this journey. The future sounds good. 🍉
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <p style="font-family: 'Orbitron', sans-serif; font-size: 2rem; margin-bottom: 20px;">
+                GET IN TOUCH
+            </p>
+            <p>For bookings, collaborations, and inquiries:</p>
+            <p style="color: var(--neon-green); font-size: 1.5rem; margin-top: 10px;">
+                contact@accidentalwatermelon.com
+            </p>
+        </div>
+        <p style="margin-top: 40px; opacity: 0.7;">
+            © 2025 The Accidental Watermelon. All Rights Reserved.
+        </p>
+    </footer>
+</body>
+</html>
