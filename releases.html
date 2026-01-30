@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Releases | The Accidental Watermelon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Righteous&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-green: #39ff14;
+            --neon-pink: #ff10f0;
+            --neon-blue: #00f0ff;
+            --neon-orange: #ff6600;
+            --neon-purple: #bf00ff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #000, #1a0033, #003333, #1a0033, #000);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 30px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(57, 255, 20, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 0 10px var(--neon-green));
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-green);
+            text-shadow: 0 0 20px var(--neon-green);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 120px 40px 60px;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-pink), var(--neon-blue), var(--neon-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300%;
+            animation: titleShift 5s ease infinite;
+        }
+
+        @keyframes titleShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Release Feed */
+        .releases-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Release Card - Large Format */
+        .release-card {
+            display: flex;
+            gap: 30px;
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.05), rgba(255, 16, 240, 0.05));
+            border: 2px solid rgba(57, 255, 20, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .release-card:nth-child(1) { animation-delay: 0.1s; }
+        .release-card:nth-child(2) { animation-delay: 0.2s; }
+        .release-card:nth-child(3) { animation-delay: 0.3s; }
+        .release-card:nth-child(4) { animation-delay: 0.4s; }
+        .release-card:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .release-card:hover {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 40px rgba(57, 255, 20, 0.3);
+            transform: translateX(10px);
+        }
+
+        .release-card:nth-child(even) {
+            border-color: rgba(255, 16, 240, 0.3);
+        }
+
+        .release-card:nth-child(even):hover {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 40px rgba(255, 16, 240, 0.3);
+        }
+
+        .release-cover-container {
+            flex: 0 0 250px;
+            position: relative;
+        }
+
+        .release-cover {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .release-cover-placeholder {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(255, 16, 240, 0.1));
+        }
+
+        .release-date-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-green);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--neon-green);
+        }
+
+        .new-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--neon-pink);
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .release-content {
+            flex: 1;
+            padding: 25px 25px 25px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .release-type {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--neon-pink);
+            margin-bottom: 10px;
+        }
+
+        .release-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+
+        .release-artists {
+            font-size: 1.1rem;
+            color: var(--neon-blue);
+            margin-bottom: 8px;
+        }
+
+        .release-features {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 20px;
+        }
+
+        /* Streaming Links */
+        .streaming-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .stream-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .stream-link:hover {
+            background: var(--neon-green);
+            color: #000;
+            border-color: var(--neon-green);
+            transform: scale(1.05);
+        }
+
+        .stream-link.spotify:hover {
+            background: #1DB954;
+            border-color: #1DB954;
+        }
+
+        .stream-link.apple:hover {
+            background: #fc3c44;
+            border-color: #fc3c44;
+        }
+
+        .stream-link.soundcloud:hover {
+            background: #ff5500;
+            border-color: #ff5500;
+        }
+
+        .stream-link.youtube:hover {
+            background: #ff0000;
+            border-color: #ff0000;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .release-card {
+                flex-direction: column;
+            }
+
+            .release-cover-container {
+                flex: 0 0 auto;
+            }
+
+            .release-cover,
+            .release-cover-placeholder {
+                height: 200px;
+            }
+
+            .release-content {
+                padding: 20px;
+            }
+
+            .release-title {
+                font-size: 1.8rem;
+            }
+
+            .release-card:hover {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="pics/TAWLogo.png" alt="Accidental Watermelon Logo" class="logo-img" onerror="this.style.display='none';">
+                <span class="logo-text">ACCIDENTAL WATERMELON</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="discography.html">DISCOGRAPHY</a></li>
+                <li><a href="releases.html">LATEST</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="page-title">LATEST RELEASES</h1>
+
+        <div class="releases-feed">
+            <!-- RELEASE TEMPLATE - Copy this card for each new release -->
+            <!-- Put newest releases at the top -->
+            <div class="release-card">
+                <div class="release-cover-container">
+                    <!-- Option 1: With cover art image -->
+                    <img src="pics/covers/cover.png" alt="Cover Art" class="release-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <!-- Option 2: Placeholder if no image -->
+                    <div class="release-cover-placeholder" style="display: none;">🍉</div>
+
+                    <span class="release-date-badge">DEC 28, 2025</span>
+                    <!-- Add this badge for brand new releases -->
+                    <span class="new-badge">NEW</span>
+                </div>
+                <div class="release-content">
+                    <p class="release-type">Single</p> <!-- Album / Single / EP -->
+                    <h2 class="release-title">SONG TITLE HERE</h2>
+                    <p class="release-artists">Artist Name</p>
+                    <p class="release-features">ft. Featured Artist, Another Feature</p>
+
+                    <div class="streaming-links">
+                        <a href="#" class="stream-link spotify">Spotify</a>
+                        <a href="#" class="stream-link apple">Apple Music</a>
+                        <a href="#" class="stream-link soundcloud">SoundCloud</a>
+                        <a href="#" class="stream-link youtube">YouTube</a>
+                    </div>
+                </div>
+            </div>
+            <!-- END RELEASE TEMPLATE -->
+
+            <!-- Example Release 2 -->
+            <div class="release-card">
+                <div class="release-cover-container">
+                    <div class="release-cover-placeholder">🎵</div>
+                    <span class="release-date-badge">DEC 20, 2025</span>
+                </div>
+                <div class="release-content">
+                    <p class="release-type">Album</p>
+                    <h2 class="release-title">ALBUM TITLE EXAMPLE</h2>
+                    <p class="release-artists">Playboi Bingi</p>
+                    <p class="release-features">ft. Fop-Shvrt, THA BIG J, Joey Fata$$</p>
+
+                    <div class="streaming-links">
+                        <a href="#" class="stream-link spotify">Spotify</a>
+                        <a href="#" class="stream-link apple">Apple Music</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Release 3 -->
+            <div class="release-card">
+                <div class="release-cover-container">
+                    <div class="release-cover-placeholder">🔥</div>
+                    <span class="release-date-badge">DEC 15, 2025</span>
+                </div>
+                <div class="release-content">
+                    <p class="release-type">EP</p>
+                    <h2 class="release-title">EP TITLE EXAMPLE</h2>
+                    <p class="release-artists">digitalestrogen</p>
+                    <p class="release-features">ft. Sulpa Boy</p>
+
+                    <div class="streaming-links">
+                        <a href="#" class="stream-link soundcloud">SoundCloud</a>
+                        <a href="#" class="stream-link youtube">YouTube</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more releases above this line -->
+
+        </div>
+    </div>
+</body>
+</html>
