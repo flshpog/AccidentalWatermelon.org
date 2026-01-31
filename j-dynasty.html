@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J Dynasty | The Accidental Watermelon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fa709a;
+            text-decoration: none;
+        }
+
+        .back-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fa709a;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: rgba(250,112,154,0.1);
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(250,112,154,0.2);
+        }
+
+        .artist-hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 120px 40px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .artist-role {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fa709a;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .artist-name {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fa709a, #fee140);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .artist-tagline {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .photo-gallery {
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: rgba(255,255,255,0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(250,112,154,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #fa709a;
+            font-weight: 600;
+        }
+
+        .bio-section {
+            padding: 60px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .bio-section p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 25px;
+            color: #444;
+        }
+
+        .highlight {
+            color: #fa709a;
+            font-weight: 600;
+        }
+
+        .artist-nav {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid rgba(250,112,154,0.2);
+        }
+
+        .artist-nav a {
+            font-size: 1rem;
+            color: #fa709a;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .artist-nav a:hover {
+            opacity: 0.7;
+        }
+
+        footer {
+            padding: 30px;
+            text-align: center;
+            color: #fa709a;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .artist-hero, .photo-gallery, .bio-section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">THE ACCIDENTAL WATERMELON</a>
+        <a href="artists.html" class="back-link">All Artists</a>
+    </nav>
+
+    <section class="artist-hero">
+        <p class="artist-role">The Trailblazer / The Outlier / The Legend</p>
+        <h1 class="artist-name">J Dynasty</h1>
+        <p class="artist-tagline">The one who didn't follow the path—he created it. First on every major DSP.</p>
+    </section>
+
+    <section class="photo-gallery">
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="pics/J_Dynasty.png" alt="J Dynasty">
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">Photo 2</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">Photo 3</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">Photo 4</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bio-section">
+        <p><span class="highlight">J Dynasty</span> is the outlier. The one who didn't follow the path—he created it.</p>
+
+        <p>While the rest of TAW was still figuring things out, J Dynasty was already on Spotify, Apple Music, and every major DSP. He wasn't just ahead of the curve; he <span class="highlight">was the curve</span>.</p>
+
+        <p>That inspiration rippled through the entire crew. Playboi Bingi saw what J Dynasty was doing and thought, "Yeah, I can do that too." THA BIG J followed suit. J Dynasty had <span class="highlight">changed the game</span> for everyone.</p>
+
+        <p>His legacy also includes the drama, the history, the <span class="highlight">notorious past with MR Steal Yo Girl</span>. The details? Classified. The vibes? Legendary.</p>
+
+        <p>The trailblazer. The legend. <span class="highlight">J Dynasty</span>.</p>
+    </section>
+
+    <nav class="artist-nav">
+        <a href="digitalestrogen.html">&larr; digitalestrogen</a>
+        <a href="sulpa-boy.html">Sulpa Boy &rarr;</a>
+    </nav>
+
+    <footer>The Accidental Watermelon</footer>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fop-Shvrt | The Accidental Watermelon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #11998e;
+            text-decoration: none;
+        }
+
+        .back-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #11998e;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: rgba(17,153,142,0.1);
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(17,153,142,0.2);
+        }
+
+        .artist-hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 120px 40px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .artist-role {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #11998e;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .artist-name {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .artist-tagline {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .photo-gallery {
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: rgba(255,255,255,0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(17,153,142,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #11998e;
+            font-weight: 600;
+        }
+
+        .bio-section {
+            padding: 60px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .bio-section p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 25px;
+            color: #444;
+        }
+
+        .highlight {
+            color: #11998e;
+            font-weight: 600;
+        }
+
+        .artist-nav {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid rgba(17,153,142,0.2);
+        }
+
+        .artist-nav a {
+            font-size: 1rem;
+            color: #11998e;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .artist-nav a:hover {
+            opacity: 0.7;
+        }
+
+        footer {
+            padding: 30px;
+            text-align: center;
+            color: #11998e;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .artist-hero, .photo-gallery, .bio-section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">THE ACCIDENTAL WATERMELON</a>
+        <a href="artists.html" class="back-link">All Artists</a>
+    </nav>
+
+    <section class="artist-hero">
+        <p class="artist-role">The Manager / Behind The Scenes Mastermind</p>
+        <h1 class="artist-name">Fop-Shvrt</h1>
+        <p class="artist-tagline">The invisible hand guiding the entire operation from the shadows. Every empire needs a strategist.</p>
+    </section>
+
+    <section class="photo-gallery">
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="pics/Fop-Shvrt.png" alt="Fop-Shvrt">
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">Photo 2</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">Photo 3</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">Photo 4</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bio-section">
+        <p>Every empire needs a strategist, and for The Accidental Watermelon, that's <span class="highlight">Fop-Shvrt</span>. While he might not have a solo discography packed with releases, don't let that fool you—this man is the invisible hand guiding the entire operation from the shadows.</p>
+
+        <p>As the group's manager, Fop-Shvrt handles <span class="highlight">everything</span> that doesn't involve stepping up to the mic solo. Social media? That's him. Album covers that make you do a double-take? Fop-Shvrt. Song titles that hit just right? You guessed it.</p>
+
+        <p>But don't think he's completely absent from the music itself. Fop-Shvrt pops up on <span class="highlight">rare vocal features</span>, blessing tracks with his presence when the moment calls for it.</p>
+
+        <p>He's the glue that holds the chaos together, the professional in a room full of wildcards. Respect the architect behind the architecture. Respect <span class="highlight">Fop-Shvrt</span>.</p>
+    </section>
+
+    <nav class="artist-nav">
+        <a href="bingi.html">&larr; Playboi Bingi</a>
+        <a href="tha-big-j.html">THA BIG J &rarr;</a>
+    </nav>
+
+    <footer>The Accidental Watermelon</footer>
+</body>
+</html>

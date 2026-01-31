@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playboi Bingi | The Accidental Watermelon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Header */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+
+        .back-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ff6b6b;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: rgba(255,107,107,0.1);
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(255,107,107,0.2);
+        }
+
+        /* Hero */
+        .artist-hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 120px 40px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .artist-role {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ff6b6b;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .artist-name {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .artist-tagline {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: rgba(255,255,255,0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255,107,107,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        /* Bio */
+        .bio-section {
+            padding: 60px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .bio-section p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 25px;
+            color: #444;
+        }
+
+        .highlight {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        /* Nav */
+        .artist-nav {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid rgba(255,107,107,0.2);
+        }
+
+        .artist-nav a {
+            font-size: 1rem;
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .artist-nav a:hover {
+            opacity: 0.7;
+        }
+
+        footer {
+            padding: 30px;
+            text-align: center;
+            color: #ff6b6b;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .artist-hero, .photo-gallery, .bio-section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">THE ACCIDENTAL WATERMELON</a>
+        <a href="artists.html" class="back-link">All Artists</a>
+    </nav>
+
+    <section class="artist-hero">
+        <p class="artist-role">The Architect / Head Honcho</p>
+        <h1 class="artist-name">Playboi Bingi</h1>
+        <p class="artist-tagline">The north star of The Accidental Watermelon. The engine, the vision, the relentless creative force.</p>
+    </section>
+
+    <section class="photo-gallery">
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="pics/Playboi_BIngi.png" alt="Playboi Bingi">
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">Photo 2</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">Photo 3</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder">Photo 4</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bio-section">
+        <p>If The Accidental Watermelon has a north star, it's <span class="highlight">Playboi Bingi</span>. The undisputed head of operations, Bingi isn't just the face of TAW—he's the engine, the vision, and the relentless creative force that keeps everything moving forward.</p>
+
+        <p>With more releases under his belt than anyone else in the crew, Bingi has built a catalog that speaks to his <span class="highlight">unwavering dedication to the craft</span>. While others come and go, experiment and dabble, Bingi is out here dropping track after track, project after project.</p>
+
+        <p>As the head honcho, Bingi sets the standard for the entire operation. He's the one who laid down the blueprint, established the vibe, and continues to lead by example. When you listen to a Playboi Bingi track, you're hearing the sound of someone who's <span class="highlight">all in</span>.</p>
+
+        <p>In a collective full of unique voices and wild personalities, Bingi is the anchor. The architect of the Accidental Watermelon empire. Long may he reign.</p>
+    </section>
+
+    <nav class="artist-nav">
+        <a href="sulpa-boy.html">&larr; Sulpa Boy</a>
+        <a href="fop-shvrt.html">Fop-Shvrt &rarr;</a>
+    </nav>
+
+    <footer>The Accidental Watermelon</footer>
+</body>
+</html>
