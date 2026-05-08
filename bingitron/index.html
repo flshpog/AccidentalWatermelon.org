@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BINGITRON — Playboi Bingi</title>
+<meta name="description" content="BINGITRON — the sixth long-player by Playboi Bingi. Available on every platform that matters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000000;
+  --panel: #0a0a0a;
+  --ink: #efefe9;
+  --ink-dim: #8a8a82;
+  --ink-faint: #4a4a44;
+  --line: rgba(255,255,255,0.07);
+  --line-strong: rgba(255,255,255,0.14);
+  --green: #4cffa3;
+  --green-deep: #1f9a5e;
+  --green-shadow: rgba(76, 255, 163, 0.22);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { background: var(--bg); color: var(--ink); }
+body {
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: lining-nums;
+}
+::selection { background: var(--green); color: #000; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ---------- shooting star ---------- */
+.star {
+  position: fixed;
+  width: 320px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(31, 154, 94, 0) 6%,
+    rgba(31, 154, 94, 0.85) 55%,
+    rgba(80, 220, 140, 1) 78%,
+    rgba(31, 154, 94, 0.6) 92%,
+    transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0 4px rgba(31, 154, 94, 0.6));
+  left: -360px;
+  transform-origin: left center;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+
+/* ---------- progress bar ---------- */
+.progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 1px;
+  width: 0;
+  background: var(--green);
+  z-index: 100;
+  box-shadow: 0 0 6px var(--green);
+}
+
+/* ---------- header ---------- */
+.hdr {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 32px;
+  font-size: 13px;
+  color: var(--ink-dim);
+  pointer-events: none;
+}
+.hdr > * { pointer-events: auto; }
+.hdr-back { display: inline-flex; align-items: center; gap: 8px; transition: color 0.25s; }
+.hdr-back:hover { color: var(--green); }
+.hdr-back .arr { display: inline-block; transition: transform 0.3s; }
+.hdr-back:hover .arr { transform: translateX(-4px); }
+.hdr-cat {
+  display: flex; align-items: center; gap: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  z-index: 10;
+  padding: 110px 32px 100px;
+  max-width: 1480px;
+  margin: 0 auto;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 88px;
+  align-items: start;
+}
+.cover-col { min-width: 0; }
+.cover-sticky {
+  position: sticky;
+  top: 80px;
+}
+.cover-frame {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 540px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px -20px rgba(0,0,0,0.85),
+    0 0 0 1px var(--line),
+    0 0 90px -20px var(--green-shadow);
+}
+.cover-frame img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: contrast(1.02) saturate(1.04);
+}
+
+.meta { margin-top: 38px; max-width: 540px; }
+.eyebrow {
+  font-size: 13px;
+  color: var(--ink-dim);
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-bottom: 16px;
+}
+.eyebrow b {
+  color: var(--ink);
+  font-weight: 500;
+  font-style: normal;
+  font-family: 'Schibsted Grotesk', sans-serif;
+}
+.title {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(72px, 11vw, 168px);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  margin-bottom: 22px;
+  color: var(--ink);
+  font-variation-settings: "SOFT" 80, "WONK" 0, "opsz" 144;
+}
+.title .ink-faint { color: var(--ink-faint); }
+.byline {
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 28px;
+  font-weight: 500;
+}
+.stats {
+  display: flex; gap: 14px; align-items: center;
+  font-size: 14px;
+  color: var(--ink-dim);
+  margin-bottom: 36px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+.stats .sep { color: var(--ink-faint); }
+/* ---------- streamers ---------- */
+.streamers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  max-width: 540px;
+}
+.strm {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: rgba(255,255,255,0.015);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink);
+  transition: all 0.3s cubic-bezier(.22,.6,.36,1);
+}
+.strm:hover {
+  border-color: var(--green);
+  background: var(--green);
+  color: #000;
+  transform: translateY(-2px);
+}
+.strm .ico { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; }
+.strm .ico svg { width: 100%; height: 100%; fill: currentColor; }
+
+/* ---------- tracklist ---------- */
+.tracks-col { min-width: 0; }
+.tracks-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line-strong);
+  font-size: 14px;
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+  color: var(--ink-dim);
+}
+.tracks-head .lbl { color: var(--ink); }
+.tracks-head .meta { font-variant-numeric: tabular-nums; }
+
+.tracks { list-style: none; }
+.track {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 22px;
+  row-gap: 3px;
+  padding: 16px 0 16px 8px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  transition: padding 0.3s cubic-bezier(.22,.6,.36,1), background 0.3s;
+}
+.track::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0; width: 0;
+  background: var(--green);
+  transition: width 0.3s cubic-bezier(.22,.6,.36,1);
+}
+.track:hover {
+  background: linear-gradient(90deg, rgba(76,255,163,0.05), transparent 70%);
+  padding-left: 22px;
+}
+.track:hover::before { width: 2px; }
+.track:hover .t-num { color: var(--green); }
+
+.t-num {
+  grid-column: 1; grid-row: 1 / span 2;
+  align-self: center;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.25s;
+}
+.t-title {
+  grid-column: 2; grid-row: 1;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0;
+  color: var(--ink);
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+.t-title .interlude {
+  font-weight: 400;
+  color: var(--ink-faint);
+  text-transform: lowercase;
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+  letter-spacing: 0;
+}
+.t-feat {
+  grid-column: 2; grid-row: 2;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--ink-dim);
+}
+.t-time {
+  grid-column: 3; grid-row: 1 / span 2;
+  align-self: center;
+  font-size: 14px;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- section divider ---------- */
+.sec-divide {
+  position: relative;
+  z-index: 10;
+  max-width: 1480px;
+  margin: 80px auto 60px;
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 24px;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-faint);
+}
+.sec-divide .rule { flex: 1; height: 1px; background: var(--line); }
+
+/* ---------- merch ---------- */
+.merch {
+  position: relative;
+  z-index: 10;
+  max-width: 1480px;
+  margin: 0 auto 100px;
+  padding: 0 32px;
+}
+.sec-head { margin-bottom: 60px; max-width: 720px; }
+.sec-eye {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--green);
+  margin-bottom: 14px;
+}
+.sec-title {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  margin-bottom: 22px;
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+}
+.sec-sub {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+  max-width: 580px;
+}
+
+.merch-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 36px;
+}
+.m-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(50px);
+  transition:
+    opacity 0.9s cubic-bezier(.22,.6,.36,1),
+    transform 0.9s cubic-bezier(.22,.6,.36,1),
+    border-color 0.4s;
+}
+.m-card.in { opacity: 1; transform: translateY(0); }
+.m-card:hover { border-color: var(--green); }
+.m-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  box-shadow: 0 0 0 0 var(--green-shadow);
+  transition: box-shadow 0.5s;
+}
+.m-card:hover::after { box-shadow: 0 0 60px -10px var(--green-shadow); }
+.m-img {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  background: #000;
+}
+.m-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.95) contrast(1.04);
+}
+.m-meta {
+  padding: 28px 30px 30px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.m-edition {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--green);
+  letter-spacing: 0;
+  margin-bottom: -4px;
+}
+.m-name {
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.005em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.m-detail {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+.m-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-top: 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.m-price {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 30px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.m-price .small {
+  font-size: 16px;
+  color: var(--ink-dim);
+  font-style: normal;
+  font-family: 'Schibsted Grotesk', sans-serif;
+}
+.m-btn {
+  font-family: 'Schibsted Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 11px 22px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(.22,.6,.36,1);
+}
+.m-btn:hover { background: var(--green); color: #000; }
+
+/* ---------- footer ---------- */
+.ftr {
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid var(--line);
+  margin: 0 32px;
+  padding: 38px 0 56px;
+  font-size: 13px;
+  color: var(--ink-faint);
+}
+.ftr-grid {
+  max-width: 1416px;
+  margin: 0 auto;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 18px;
+  align-items: baseline;
+}
+.ftr-grid a:hover { color: var(--green); }
+.ftr-mark {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1080px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 60px; }
+  .cover-sticky { position: relative; top: auto; }
+  .cover-frame { max-width: 480px; }
+  .meta { max-width: 100%; }
+  .merch-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .hdr { padding: 14px 18px; font-size: 12px; }
+  .hero { padding: 90px 18px 60px; }
+  .merch, .sec-divide { padding: 0 18px; }
+  .ftr { margin: 0 18px; }
+  .title { font-size: 64px; }
+  .stats { flex-wrap: wrap; gap: 8px; }
+  .streamers { grid-template-columns: 1fr 1fr; }
+  .track { grid-template-columns: 28px 1fr auto; column-gap: 14px; }
+  .t-feat { font-size: 13px; }
+  .m-meta { padding: 22px; }
+  .m-price { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<header class="hdr">
+  <a class="hdr-back" href="../artists/index.html"><span class="arr">←</span> The Accidental Watermelon</a>
+  <div class="hdr-cat">TAW–006 · 2024</div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+
+    <div class="cover-col">
+      <div class="cover-sticky">
+        <div class="cover-frame">
+          <img src="../pics/Bingitron.jfif" alt="BINGITRON cover art" loading="eager">
+        </div>
+        <div class="streamers">
+          <a class="strm" href="https://open.spotify.com/album/1FySTNhUCX9laFTRXnvIES" target="_blank" rel="noopener" aria-label="Spotify">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12C24 5.4 18.66 0 12 0Zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02Zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2Zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3Z"/></svg></span>
+          </a>
+          <a class="strm" href="https://music.apple.com/us/album/bingitron/1833780116" target="_blank" rel="noopener" aria-label="Apple Music">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M19 3v12.26A4 4 0 1 0 21 19V7l-12 2v8.26A4 4 0 1 0 11 21V8l8-1.34V3Z"/></svg></span>
+          </a>
+          <a class="strm" href="https://music.youtube.com/playlist?list=OLAK5uy_kPALzEng6zJSj7pnr4mQ2IDqGA0OXPiYY" target="_blank" rel="noopener" aria-label="YouTube Music">
+            <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9.7 8.6v6.8L16 12 9.7 8.6Z"/></svg></span>
+          </a>
+          <a class="strm" href="https://tidal.com/album/454597204" target="_blank" rel="noopener" aria-label="Tidal">
+            <span class="ico"><svg viewBox="0 0 28 16"><path d="M4 0L8 4 4 8 0 4Zm10 0l4 4-4 4-4-4Zm10 0l4 4-4 4-4-4ZM14 8l4 4-4 4-4-4Z"/></svg></span>
+          </a>
+          <a class="strm" href="https://www.deezer.com/us/album/805998821" target="_blank" rel="noopener" aria-label="Deezer">
+            <span class="ico"><svg viewBox="0 0 24 16"><rect x="0" y="12" width="3.4" height="4"/><rect x="5.2" y="9" width="3.4" height="7"/><rect x="10.4" y="5" width="3.4" height="11"/><rect x="15.6" y="2" width="3.4" height="14"/><rect x="20.8" y="0" width="3.2" height="16"/></svg></span>
+          </a>
+        </div>
+        <div class="meta">
+          <div class="eyebrow">The sixth long-player by <b>Playboi Bingi</b>.</div>
+          <h1 class="title">Bingi<span class="ink-faint">tron</span></h1>
+          <div class="byline">Playboi Bingi</div>
+          <div class="stats">
+            <span>23 tracks</span>
+            <span class="sep">·</span>
+            <span>52:43</span>
+            <span class="sep">·</span>
+            <span>2024</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tracks-col">
+      <div class="tracks-head">
+        <span class="lbl">Tracklist</span>
+        <span class="meta">23 / 52:43</span>
+      </div>
+      <ol class="tracks">
+        <li class="track"><span class="t-num">01</span><span class="t-title">A Philadelphia Classic</span><span class="t-feat">Playboi Bingi &amp; THA BIG J</span><span class="t-time">2:14</span></li>
+        <li class="track"><span class="t-num">02</span><span class="t-title">Cabbage</span><span class="t-feat">Playboi Bingi &amp; digitalestrogen</span><span class="t-time">2:44</span></li>
+        <li class="track"><span class="t-num">03</span><span class="t-title">Pancreatitis</span><span class="t-feat">Playboi Bingi</span><span class="t-time">2:22</span></li>
+        <li class="track"><span class="t-num">04</span><span class="t-title">Psychedelic Mushroom Retreat</span><span class="t-feat">Playboi Bingi &amp; digitalestrogen</span><span class="t-time">2:21</span></li>
+        <li class="track"><span class="t-num">05</span><span class="t-title">Scary Stranger Gorilla Pranks</span><span class="t-feat">Playboi Bingi &amp; THA BIG J</span><span class="t-time">1:42</span></li>
+        <li class="track"><span class="t-num">06</span><span class="t-title">Wrathful</span><span class="t-feat">Playboi Bingi</span><span class="t-time">1:02</span></li>
+        <li class="track"><span class="t-num">07</span><span class="t-title">Cash On Me</span><span class="t-feat">Playboi Bingi</span><span class="t-time">2:18</span></li>
+        <li class="track"><span class="t-num">08</span><span class="t-title">Bingbof Studios</span><span class="t-feat">Playboi Bingi, THA BIG J &amp; digitalestrogen</span><span class="t-time">2:25</span></li>
+        <li class="track"><span class="t-num">09</span><span class="t-title">Hoodrich Velociraptor</span><span class="t-feat">Playboi Bingi &amp; Fop-Shvrt</span><span class="t-time">2:16</span></li>
+        <li class="track"><span class="t-num">10</span><span class="t-title">A Soapy Bathtub <span class="interlude">(interlude)</span></span><span class="t-feat">Playboi Bingi &amp; Fop-Shvrt</span><span class="t-time">0:55</span></li>
+        <li class="track"><span class="t-num">11</span><span class="t-title">This That New Sound</span><span class="t-feat">Playboi Bingi</span><span class="t-time">2:24</span></li>
+        <li class="track"><span class="t-num">12</span><span class="t-title">Notorious Houston Drill Rapper</span><span class="t-feat">Playboi Bingi</span><span class="t-time">2:07</span></li>
+        <li class="track"><span class="t-num">13</span><span class="t-title">Fartship Fortitude</span><span class="t-feat">Playboi Bingi</span><span class="t-time">1:17</span></li>
+        <li class="track"><span class="t-num">14</span><span class="t-title">Little Classic Adam</span><span class="t-feat">Playboi Bingi, Fop-Shvrt &amp; digitalestrogen</span><span class="t-time">1:58</span></li>
+        <li class="track"><span class="t-num">15</span><span class="t-title">Go White Boy Go</span><span class="t-feat">Playboi Bingi, Fop-Shvrt &amp; Joey Fata$$</span><span class="t-time">2:59</span></li>
+        <li class="track"><span class="t-num">16</span><span class="t-title">J. Cole In A Wendy's Bathroom</span><span class="t-feat">Playboi Bingi</span><span class="t-time">3:25</span></li>
+        <li class="track"><span class="t-num">17</span><span class="t-title">All That Is Feathered</span><span class="t-feat">Playboi Bingi</span><span class="t-time">2:31</span></li>
+        <li class="track"><span class="t-num">18</span><span class="t-title">He Was Running From A Cop Car</span><span class="t-feat">Playboi Bingi &amp; digitalestrogen</span><span class="t-time">2:37</span></li>
+        <li class="track"><span class="t-num">19</span><span class="t-title">Egotistical</span><span class="t-feat">Playboi Bingi</span><span class="t-time">1:51</span></li>
+        <li class="track"><span class="t-num">20</span><span class="t-title">Frisky Young Bingi</span><span class="t-feat">Playboi Bingi &amp; THA BIG J</span><span class="t-time">2:45</span></li>
+        <li class="track"><span class="t-num">21</span><span class="t-title">Thompson's Cutz &amp; Designs</span><span class="t-feat">Playboi Bingi &amp; digitalestrogen</span><span class="t-time">3:28</span></li>
+        <li class="track"><span class="t-num">22</span><span class="t-title">It's Beat Down Time!</span><span class="t-feat">Playboi Bingi &amp; digitalestrogen</span><span class="t-time">1:34</span></li>
+        <li class="track"><span class="t-num">23</span><span class="t-title">Goodnight Kiss</span><span class="t-feat">Playboi Bingi, digitalestrogen, Fop-Shvrt &amp; THA BIG J</span><span class="t-time">3:28</span></li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+
+<div class="sec-divide">
+  <span>two</span>
+  <div class="rule"></div>
+  <span>objects</span>
+</div>
+
+<section class="merch">
+  <div class="sec-head">
+    <div class="sec-eye">Physical artifacts.</div>
+    <h2 class="sec-title">Pressed, printed,<br>and shipped slow.</h2>
+    <p class="sec-sub">Hand-numbered runs of merchandise pulled directly from the BINGITRON master tape. Once these are gone they are not coming back. Allow four to six weeks for delivery. Longer if there is weather.</p>
+  </div>
+
+  <div class="merch-grid">
+
+    <article class="m-card">
+      <div class="m-img">
+        <img src="../pics/BingitronVinyl.jfif" alt="Bingitron 2LP">
+      </div>
+      <div class="m-meta">
+        <div class="m-edition">Edition of 333.</div>
+        <div class="m-name">BINGITRON LIMITED EDITION ABSTRACT GREEN 2LP</div>
+        <div class="m-detail">180-gram heavyweight double LP, hand-poured translucent toxic-green wax. Gatefold sleeve with screen-printed inner. Etched D-side. Each copy hand-numbered.</div>
+        <div class="m-row">
+          <span class="m-price">$89<span class="small">.99</span></span>
+          <button class="m-btn" type="button">Add</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="m-card">
+      <div class="m-img">
+        <img src="../pics/BingitronCD.jfif" alt="Bingitron CD">
+      </div>
+      <div class="m-meta">
+        <div class="m-edition">Edition of 500.</div>
+        <div class="m-name">BINGITRON ARCHIVAL COMPACT DISC IN PAPER SLEEVE</div>
+        <div class="m-detail">Glass-mastered CD pressed with the master engineer audibly sighing. Inside a hand-letterpressed paper sleeve with a folded insert. The way they used to make them.</div>
+        <div class="m-row">
+          <span class="m-price">$44<span class="small">.99</span></span>
+          <button class="m-btn" type="button">Add</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="m-card">
+      <div class="m-img">
+        <img src="../pics/BingitronClothing.jfif" alt="Bingitron garment trio">
+      </div>
+      <div class="m-meta">
+        <div class="m-edition">Limited run.</div>
+        <div class="m-name">BINGITRON LITURGICAL UNIFORM (TEE + ZIP HOODIE + KNIT BEANIE)</div>
+        <div class="m-detail">The full liturgy. 240gsm boxy tee, 500gsm cross-grain hoodie, double-cuffed knit beanie. Each piece embroidered with the BINGITRON sigil. Sold only as the complete set.</div>
+        <div class="m-row">
+          <span class="m-price">$269<span class="small">.00</span></span>
+          <button class="m-btn" type="button">Add</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="m-card">
+      <div class="m-img">
+        <img src="../pics/BingitronBoxSet.jfif" alt="Bingitron box set">
+      </div>
+      <div class="m-meta">
+        <div class="m-edition">Edition of 100. Numbered.</div>
+        <div class="m-name">BINGITRON THE BOX (COMPLETE PHYSICAL ARTIFACT)</div>
+        <div class="m-detail">Everything in one foil-stamped clamshell. 2LP, CD, full liturgical uniform, signed Polaroid, and a USB stub containing the unmastered demos. Truly the most you can spend on a BINGITRON.</div>
+        <div class="m-row">
+          <span class="m-price">$499<span class="small">.99</span></span>
+          <button class="m-btn" type="button">Add</button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<footer class="ftr">
+  <div class="ftr-grid">
+    <span class="ftr-mark">Bingi<span style="color:var(--ink-faint)">tron</span></span>
+    <span>TAW–006 · © 2024 Playboi Bingi</span>
+    <a href="../artists/index.html">Return ↗</a>
+  </div>
+</footer>
+
+<script>
+// scroll progress
+const progressEl = document.getElementById('progress');
+function updateProgress() {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+  progressEl.style.width = pct + '%';
+}
+updateProgress();
+window.addEventListener('scroll', updateProgress, { passive: true });
+
+// merch fade-in
+const cards = document.querySelectorAll('.m-card');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = Array.from(cards).indexOf(entry.target);
+      setTimeout(() => entry.target.classList.add('in'), idx * 110);
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.18, rootMargin: '0px 0px -60px 0px' });
+cards.forEach(c => io.observe(c));
+
+// merch buttons placeholder
+document.querySelectorAll('.m-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    b.textContent = 'Coming soon';
+    setTimeout(() => { b.textContent = 'Add'; }, 1400);
+  });
+});
+
+// shooting star — a streak of dark green every 8–22s
+function shootStar() {
+  if (document.hidden) { schedule(); return; }
+  const star = document.createElement('div');
+  star.className = 'star';
+  // start anywhere on screen, mostly upper half
+  const yStart = Math.random() * window.innerHeight * 0.85;
+  // slight diagonal
+  const angle = -10 + (Math.random() - 0.5) * 30; // -25 to +5 deg
+  // motion along the rotated x-axis
+  const distance = window.innerWidth + 700;
+  const duration = 1200 + Math.random() * 900;
+  star.style.top = yStart + 'px';
+  star.style.transform = `rotate(${angle}deg)`;
+  document.body.appendChild(star);
+  // animate via web animations API
+  star.animate([
+    { transform: `rotate(${angle}deg) translateX(0)`, opacity: 0 },
+    { transform: `rotate(${angle}deg) translateX(${distance * 0.12}px)`, opacity: 0.95, offset: 0.12 },
+    { transform: `rotate(${angle}deg) translateX(${distance * 0.88}px)`, opacity: 0.95, offset: 0.88 },
+    { transform: `rotate(${angle}deg) translateX(${distance}px)`, opacity: 0 }
+  ], {
+    duration,
+    easing: 'cubic-bezier(.22,.6,.36,1)',
+    fill: 'forwards'
+  });
+  setTimeout(() => star.remove(), duration + 100);
+  schedule();
+}
+function schedule() {
+  setTimeout(shootStar, 8000 + Math.random() * 14000);
+}
+// kick off after a beat
+setTimeout(shootStar, 2200);
+</script>
+</body>
+</html>

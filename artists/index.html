@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAW.OS // Desktop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../chaos.css">
+<script defer src="../chaos.js"></script>
+<style>
+:root {
+  --bg: #ededed;
+  --paper: #ffffff;
+  --ink: #000000;
+  --ac: #ff0080;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'VT323', monospace;
+  user-select: none;
+  cursor: default;
+  background-image:
+    linear-gradient(0deg, rgba(0,0,0,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9990;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0.06) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9991;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+}
+
+/* ---- title bar ---- */
+.titlebar {
+  position: fixed; top: 0; left: 0; right: 0; height: 30px;
+  background: #000; color: #fff;
+  display: flex; align-items: center; padding: 0 10px;
+  z-index: 1100;
+  font-family: 'Silkscreen', monospace;
+  font-size: 11px; letter-spacing: 0.5px;
+  border-bottom: 2px solid #000;
+}
+.title-mark { padding: 6px 0; }
+.title-mark .star { display: inline-block; animation: spin 4s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.title-spacer { flex: 1; }
+.title-status { display: flex; gap: 14px; align-items: center; }
+.dot { width: 8px; height: 8px; background: #ff0033; }
+.dot.blink { animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.clock { font-variant-numeric: tabular-nums; }
+
+/* ---- menubar ---- */
+.menubar {
+  position: fixed; top: 30px; left: 0; right: 0; height: 26px;
+  background: var(--paper);
+  border-bottom: 2px solid #000;
+  display: flex; align-items: center; padding: 0 6px;
+  z-index: 1099;
+  font-size: 18px;
+}
+.menu-item { padding: 2px 12px; cursor: pointer; }
+.menu-item:hover { background: #000; color: #fff; }
+.menu-spacer { flex: 1; }
+.menu-button {
+  border: 2px solid #000; background: var(--paper);
+  padding: 1px 10px; font-family: 'VT323', monospace; font-size: 16px;
+  cursor: pointer; margin-right: 4px;
+}
+.menu-button:hover { background: var(--ac); }
+.menu-button:active { transform: translate(1px, 1px); }
+
+/* ---- desktop ---- */
+.desktop {
+  position: fixed; top: 56px; left: 0; right: 0; bottom: 26px;
+  overflow: hidden;
+}
+
+/* watermark */
+.watermark {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+}
+.watermark .line {
+  font-family: 'Silkscreen', monospace;
+  font-weight: 700;
+  font-size: clamp(40px, 7vw, 84px);
+  letter-spacing: -2px;
+  line-height: 0.92;
+  color: #000;
+}
+.watermark .line.alt {
+  color: var(--paper);
+  -webkit-text-stroke: 2px #000;
+  text-shadow: 6px 6px 0 var(--ac);
+}
+.watermark .sub {
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  letter-spacing: 6px;
+  margin-top: 10px;
+  color: #000;
+}
+.watermark .ribbon {
+  display: inline-block;
+  border: 2px solid #000;
+  background: var(--paper);
+  padding: 2px 10px;
+  font-family: 'Silkscreen', monospace;
+  font-size: 10px; letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+/* ---- folder ---- */
+.folder {
+  position: absolute;
+  width: 92px;
+  text-align: center;
+  z-index: 10;
+  --c: #fff;
+  cursor: grab;
+}
+.folder.dragging { z-index: 800; cursor: grabbing; }
+.folder-tab {
+  width: 36px; height: 10px;
+  background: var(--c);
+  border: 2px solid #000;
+  border-bottom: none;
+}
+.folder-body {
+  width: 80px; height: 60px;
+  background: var(--c);
+  border: 2px solid #000;
+  margin-top: 0;
+  box-shadow: 4px 4px 0 #000;
+  position: relative;
+}
+.folder-body::before {
+  content: '';
+  position: absolute; inset: 5px;
+  border: 1px dashed rgba(0,0,0,0.35);
+}
+.folder-label {
+  display: inline-block;
+  font-family: 'VT323', monospace;
+  font-size: 16px; line-height: 1;
+  padding: 2px 4px;
+  margin-top: 8px;
+  background: var(--paper);
+  border: 1px solid #000;
+  max-width: 92px;
+  word-break: break-word;
+}
+.folder.over-trash .folder-body { background: #000; }
+.folder.over-trash .folder-tab { background: #000; }
+.folder.over-trash .folder-label { background: #000; color: var(--paper); }
+
+/* ---- trash ---- */
+.trash {
+  position: absolute; right: 14px; bottom: 14px;
+  width: 64px; text-align: center; z-index: 5;
+}
+.trash-can {
+  width: 44px; height: 50px; margin: 0 auto;
+  border: 2px solid #000; background: var(--paper);
+  position: relative;
+  background-image: repeating-linear-gradient(0deg, transparent 0 5px, rgba(0,0,0,0.65) 5px 6px);
+}
+.trash-can::before {
+  content: ''; position: absolute; top: -7px; left: -5px; right: -5px; height: 5px;
+  background: var(--paper); border: 2px solid #000;
+}
+.trash-can::after {
+  content: ''; position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+  width: 14px; height: 4px; background: var(--paper); border: 2px solid #000;
+}
+.trash-label {
+  font-family: 'VT323', monospace;
+  font-size: 14px; margin-top: 8px;
+}
+.trash.full .trash-can { background-color: var(--ac); }
+
+/* ---- status bar ---- */
+.statusbar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 26px;
+  background: var(--paper);
+  border-top: 2px solid #000;
+  display: flex; align-items: center;
+  z-index: 1098;
+  font-size: 16px;
+  font-family: 'VT323', monospace;
+}
+.status-cell {
+  padding: 0 12px; height: 100%;
+  display: flex; align-items: center;
+  border-right: 1px solid #000;
+}
+.status-cell:last-child { border-right: none; }
+.status-cell.flash { animation: cflash 1.2s steps(2) infinite; }
+@keyframes cflash { 50% { background: #000; color: #fff; } }
+.marquee {
+  flex: 1; overflow: hidden; white-space: nowrap; height: 100%;
+  border-right: 1px solid #000;
+  display: flex; align-items: center;
+}
+.marquee span {
+  display: inline-block; padding-left: 100%;
+  animation: scroll 30s linear infinite;
+}
+@keyframes scroll { 100% { transform: translateX(-200%); } }
+
+/* ---- context menu ---- */
+.ctx {
+  position: fixed; z-index: 6000; display: none;
+  background: var(--paper);
+  border: 2px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  min-width: 160px;
+}
+.ctx.open { display: block; }
+.ctx-title {
+  background: #000; color: #fff;
+  padding: 4px 12px;
+  font-family: 'Silkscreen', monospace;
+  font-size: 10px; letter-spacing: 1px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ctx-item { padding: 4px 14px; cursor: pointer; line-height: 1.1; }
+.ctx-item:hover { background: #000; color: #fff; }
+.ctx-sep { height: 2px; background: #000; }
+.ctx-swatches {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 4px; padding: 8px 10px;
+}
+.ctx-swatch {
+  width: 22px; height: 22px;
+  border: 2px solid #000;
+  cursor: pointer;
+}
+.ctx-swatch:hover { transform: scale(1.18); }
+
+/* ---- modal ---- */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  z-index: 9000; display: none;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--paper);
+  border: 3px solid #000;
+  box-shadow: 8px 8px 0 #000;
+  min-width: 320px; max-width: 92vw;
+  font-family: 'VT323', monospace;
+}
+.modal-title {
+  background: #000; color: #fff;
+  padding: 6px 12px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 1.2px;
+}
+.modal-x {
+  cursor: pointer; padding: 0 6px;
+  border: 1px solid #fff;
+}
+.modal-body { padding: 18px; font-size: 18px; }
+.modal-body input {
+  width: 100%; padding: 6px 10px;
+  border: 2px solid #000; background: var(--paper);
+  font-family: 'VT323', monospace; font-size: 18px;
+  outline: none;
+}
+.modal-body input:focus { background: #ffffd0; }
+.modal-actions {
+  padding: 0 18px 18px;
+  display: flex; gap: 8px; justify-content: flex-end;
+}
+.modal-btn {
+  border: 2px solid #000; background: var(--paper);
+  padding: 4px 14px;
+  font-family: 'VT323', monospace; font-size: 17px;
+  cursor: pointer;
+}
+.modal-btn.primary { background: #000; color: #fff; }
+.modal-btn:hover { background: var(--ac); color: #000; }
+
+/* ---- boot screen ---- */
+.boot {
+  position: fixed; inset: 0; z-index: 12000;
+  background: #000; color: #f0f0f0;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  font-family: 'VT323', monospace; font-size: 22px;
+  padding: 40px 60px;
+}
+.boot.hidden { display: none; }
+.boot-line { opacity: 0; }
+.boot-line.show { opacity: 1; }
+.boot-cursor {
+  display: inline-block; width: 11px; height: 22px; vertical-align: -3px;
+  background: #f0f0f0; margin-left: 2px;
+  animation: blink 1s steps(2) infinite;
+}
+.boot-skip {
+  position: fixed; bottom: 16px; right: 18px;
+  font-size: 14px; opacity: 0.55; letter-spacing: 1px;
+}
+
+/* ---- responsive ---- */
+@media (max-width: 720px) {
+  .titlebar { font-size: 9px; }
+  .title-mark { padding: 6px 0; }
+  .menubar { font-size: 16px; }
+  .menu-button { font-size: 13px; }
+  .marquee { display: none; }
+  .watermark .line { font-size: 38px; }
+  .watermark .sub { font-size: 16px; letter-spacing: 4px; }
+}
+</style>
+</head>
+<body data-chaos="high">
+
+<!-- boot screen -->
+<div class="boot" id="boot">
+  <div class="boot-line" data-d="0">TAW.OS v4.7 // initializing</div>
+  <div class="boot-line" data-d="350">> mounting /artists ............ [ok]</div>
+  <div class="boot-line" data-d="700">> resolving 8 personalities .... [ok]</div>
+  <div class="boot-line" data-d="1100">> watermelon kernel ready ...... [ok]</div>
+  <div class="boot-line" data-d="1500">> warning: signal not understood</div>
+  <div class="boot-line" data-d="1900">&gt; press anything to continue<span class="boot-cursor"></span></div>
+  <div class="boot-skip">[click anywhere to skip]</div>
+</div>
+
+<!-- title bar -->
+<div class="titlebar">
+  <div class="title-mark"><span class="star">★</span> TAW.OS // DESKTOP</div>
+  <div class="title-spacer"></div>
+  <div class="title-status">
+    <span class="dot blink"></span>
+    <span>REC</span>
+    <span class="clock" id="clock">--:--:--</span>
+  </div>
+</div>
+
+<!-- menubar -->
+<div class="menubar">
+  <div class="menu-item" data-action="about">About</div>
+  <div class="menu-item" data-action="reset">Reset</div>
+  <div class="menu-item" data-action="emptytrash">Empty Trash</div>
+  <div class="menu-spacer"></div>
+  <button class="menu-button" id="hue-btn">↻ random colors</button>
+  <button class="menu-button" id="grid-btn">▦ tidy</button>
+</div>
+
+<!-- desktop -->
+<div class="desktop" id="desktop">
+  <div class="watermark">
+    <div class="ribbon">★ MUSIC COLLECTIVE EST. WHENEVER ★</div>
+    <div class="line">THE ACCIDENTAL</div>
+    <div class="line alt chaos-rgb-strong">WATERMELON</div>
+    <div class="sub">// DRAG · CLICK · RIGHT-CLICK //</div>
+  </div>
+
+  <div class="trash" id="trash" title="drop folders here to hide them">
+    <div class="trash-can"></div>
+    <div class="trash-label">[trash]</div>
+  </div>
+</div>
+
+<!-- statusbar -->
+<div class="statusbar">
+  <div class="status-cell" id="item-count">8 items</div>
+  <div class="marquee"><span id="marquee-text">♨ ACCIDENTAL.WATERMELON.ORG :: 8 ARTISTS LOADED :: DRAG ANY FOLDER :: RIGHT-CLICK FOR OPTIONS :: NOW PLAYING — silence.wav (0:00 / ∞) ♨</span></div>
+  <div class="status-cell flash">● LIVE</div>
+</div>
+
+<!-- context menu -->
+<div class="ctx" id="ctx">
+  <div class="ctx-title" id="ctx-title">FOLDER</div>
+  <div class="ctx-item" data-act="open">› open</div>
+  <div class="ctx-item" data-act="rename">› rename...</div>
+  <div class="ctx-swatches" id="ctx-swatches"></div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" data-act="trash" id="ctx-trash">› send to trash</div>
+  <div class="ctx-item" data-act="restore" id="ctx-restore" style="display:none">› restore</div>
+</div>
+
+<!-- modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title"><span>RENAME FOLDER</span><span class="modal-x" id="modal-x">×</span></div>
+    <div class="modal-body">
+      <input id="modal-input" type="text" maxlength="32" autocomplete="off">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn" id="modal-cancel">cancel</button>
+      <button class="modal-btn primary" id="modal-ok">[ ok ]</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SLUGS = [
+  { slug: 'bingi',           label: 'Playboi Bingi',  color: '#ff0080', href: '../bingi/index.html' },
+  { slug: 'fop-shvrt',       label: 'Fop-Shvrt',      color: '#00ff66', href: '../fop-shvrt/index.html' },
+  { slug: 'tha-big-j',       label: 'THA BIG J',      color: '#fff200', href: '../tha-big-j/index.html' },
+  { slug: 'joey-fatass',     label: 'Joey Fata$$',    color: '#00e5ff', href: '../joey-fatass/index.html' },
+  { slug: 'nitsu',           label: 'nitsu',          color: '#ffffff', href: '../nitsu/index.html' },
+  { slug: 'digitalestrogen', label: 'digitalestrogen',color: '#ff00ff', href: '../digitalestrogen/index.html' },
+  { slug: 'j-dynasty',       label: 'J Dynasty',      color: '#ff5e00', href: '../j-dynasty/index.html' },
+  { slug: 'sulpa-boy',       label: 'Sulpa Boy',      color: '#a3ff00', href: '../sulpa-boy/index.html' }
+];
+const PALETTE = ['#ffffff','#000000','#ff0080','#00ff66','#fff200','#00e5ff','#ff00ff','#ff5e00','#a3ff00','#ff0033'];
+const STORE = 'taw-desktop-v1';
+const FOLDER_W = 92, FOLDER_H = 110;
+
+const desktop = document.getElementById('desktop');
+const trashEl = document.getElementById('trash');
+const ctx = document.getElementById('ctx');
+const ctxTitle = document.getElementById('ctx-title');
+const ctxRestore = document.getElementById('ctx-restore');
+const ctxTrash = document.getElementById('ctx-trash');
+const modal = document.getElementById('modal');
+const modalInput = document.getElementById('modal-input');
+
+function load() {
+  try {
+    const raw = localStorage.getItem(STORE);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return null;
+}
+function save() { localStorage.setItem(STORE, JSON.stringify(state)); }
+
+function defaults() {
+  const w = desktop.clientWidth || window.innerWidth;
+  const h = desktop.clientHeight || (window.innerHeight - 56 - 26);
+  // top + sides grid that avoids the central watermark
+  const positions = [
+    { x: 0.04, y: 0.06 }, { x: 0.18, y: 0.06 }, { x: 0.82, y: 0.06 }, { x: 0.96, y: 0.06 },
+    { x: 0.04, y: 0.42 }, { x: 0.04, y: 0.74 }, { x: 0.82, y: 0.42 }, { x: 0.82, y: 0.74 }
+  ];
+  const folders = {};
+  SLUGS.forEach((s, i) => {
+    const p = positions[i] || { x: 0.04 + 0.1*i, y: 0.04 };
+    folders[s.slug] = {
+      x: clamp(Math.round(p.x * w - FOLDER_W/2), 6, w - FOLDER_W - 6),
+      y: clamp(Math.round(p.y * h), 6, h - FOLDER_H - 6),
+      label: s.label,
+      color: s.color,
+      trashed: false
+    };
+  });
+  return { folders, version: 1 };
+}
+
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+function clampPos(p) {
+  const w = desktop.clientWidth, h = desktop.clientHeight;
+  return {
+    x: clamp(p.x, 0, Math.max(0, w - FOLDER_W)),
+    y: clamp(p.y, 0, Math.max(0, h - FOLDER_H))
+  };
+}
+
+let state = load() || defaults();
+// reconcile against canonical SLUGS
+SLUGS.forEach((s, i) => {
+  if (!state.folders[s.slug]) {
+    state.folders[s.slug] = { x: 30 + i*12, y: 30 + i*12, label: s.label, color: s.color, trashed: false };
+  }
+});
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function render() {
+  document.querySelectorAll('.folder').forEach(el => el.remove());
+  let active = 0;
+  let trashed = 0;
+  SLUGS.forEach(meta => {
+    const f = state.folders[meta.slug];
+    if (f.trashed) { trashed++; return; }
+    active++;
+    const el = document.createElement('div');
+    el.className = 'folder';
+    el.dataset.slug = meta.slug;
+    el.style.left = f.x + 'px';
+    el.style.top = f.y + 'px';
+    el.style.setProperty('--c', f.color);
+    el.innerHTML = `<div class="folder-tab"></div><div class="folder-body"></div><div class="folder-label">${escapeHtml(f.label)}</div>`;
+    desktop.appendChild(el);
+    bindFolder(el, meta);
+  });
+  trashEl.classList.toggle('full', trashed > 0);
+  document.getElementById('item-count').textContent = `${active} item${active===1?'':'s'}` + (trashed?` (+${trashed} trashed)`:'');
+}
+
+let drag = null;
+function bindFolder(el, meta) {
+  el.addEventListener('mousedown', e => onDown(e, el, meta));
+  el.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) return;
+    onDown(e.touches[0], el, meta, true);
+    e.preventDefault();
+  }, { passive: false });
+  el.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    openCtx(e.clientX, e.clientY, meta.slug);
+  });
+}
+
+function onDown(e, el, meta, isTouch) {
+  if (e.button === 2) return;
+  closeCtx();
+  const rect = el.getBoundingClientRect();
+  drag = {
+    el, meta,
+    offsetX: e.clientX - rect.left,
+    offsetY: e.clientY - rect.top,
+    startX: e.clientX, startY: e.clientY,
+    moved: false,
+    isTouch: !!isTouch
+  };
+  el.classList.add('dragging');
+  if (isTouch) {
+    document.addEventListener('touchmove', onMoveTouch, { passive: false });
+    document.addEventListener('touchend', onUp);
+    document.addEventListener('touchcancel', onUp);
+  } else {
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  }
+}
+
+function onMove(e) {
+  if (!drag) return;
+  if (Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY) > 4) drag.moved = true;
+  if (!drag.moved) return;
+  const dRect = desktop.getBoundingClientRect();
+  const p = clampPos({
+    x: e.clientX - dRect.left - drag.offsetX,
+    y: e.clientY - dRect.top - drag.offsetY
+  });
+  drag.el.style.left = p.x + 'px';
+  drag.el.style.top = p.y + 'px';
+  drag.lastX = p.x; drag.lastY = p.y;
+  // hover trash
+  const tRect = trashEl.getBoundingClientRect();
+  const fRect = drag.el.getBoundingClientRect();
+  if (intersect(fRect, tRect)) drag.el.classList.add('over-trash');
+  else drag.el.classList.remove('over-trash');
+}
+function onMoveTouch(e) {
+  if (e.touches.length !== 1) return;
+  e.preventDefault();
+  onMove(e.touches[0]);
+}
+function intersect(a, b) {
+  return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+}
+function onUp() {
+  if (!drag) return;
+  drag.el.classList.remove('dragging');
+  drag.el.classList.remove('over-trash');
+  if (drag.moved && drag.lastX !== undefined) {
+    state.folders[drag.meta.slug].x = drag.lastX;
+    state.folders[drag.meta.slug].y = drag.lastY;
+    const fRect = drag.el.getBoundingClientRect();
+    const tRect = trashEl.getBoundingClientRect();
+    if (intersect(fRect, tRect)) {
+      state.folders[drag.meta.slug].trashed = true;
+    }
+    save(); render();
+  } else {
+    // pure click → navigate
+    window.location.href = drag.meta.href;
+  }
+  document.removeEventListener('mousemove', onMove);
+  document.removeEventListener('mouseup', onUp);
+  document.removeEventListener('touchmove', onMoveTouch);
+  document.removeEventListener('touchend', onUp);
+  document.removeEventListener('touchcancel', onUp);
+  drag = null;
+}
+
+// context menu
+let ctxSlug = null;
+function openCtx(x, y, slug) {
+  ctxSlug = slug;
+  const f = state.folders[slug];
+  ctxTitle.textContent = (f.label || slug).toUpperCase();
+  ctxRestore.style.display = f.trashed ? 'block' : 'none';
+  ctxTrash.style.display = f.trashed ? 'none' : 'block';
+  // build swatches
+  const sw = document.getElementById('ctx-swatches');
+  sw.innerHTML = '';
+  PALETTE.forEach(c => {
+    const s = document.createElement('div');
+    s.className = 'ctx-swatch';
+    s.style.background = c;
+    s.title = c;
+    s.addEventListener('click', () => {
+      state.folders[ctxSlug].color = c;
+      save(); render(); closeCtx();
+    });
+    sw.appendChild(s);
+  });
+  ctx.classList.add('open');
+  // position
+  const w = ctx.offsetWidth || 200;
+  const h = ctx.offsetHeight || 260;
+  ctx.style.left = clamp(x, 4, window.innerWidth - w - 4) + 'px';
+  ctx.style.top  = clamp(y, 4, window.innerHeight - h - 4) + 'px';
+}
+function closeCtx() { ctx.classList.remove('open'); ctxSlug = null; }
+document.addEventListener('mousedown', e => { if (!ctx.contains(e.target)) closeCtx(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCtx(); closeModal(); } });
+ctx.querySelectorAll('.ctx-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const act = item.dataset.act;
+    if (!ctxSlug) return;
+    const meta = SLUGS.find(s => s.slug === ctxSlug);
+    const f = state.folders[ctxSlug];
+    if (act === 'open') window.location.href = meta.href;
+    else if (act === 'rename') openRename(ctxSlug);
+    else if (act === 'trash') { f.trashed = true; save(); render(); }
+    else if (act === 'restore') {
+      f.trashed = false;
+      const p = clampPos({ x: f.x, y: f.y });
+      f.x = p.x; f.y = p.y;
+      save(); render();
+    }
+    closeCtx();
+  });
+});
+
+// trash right-click
+trashEl.addEventListener('contextmenu', e => {
+  e.preventDefault();
+  const trashed = Object.values(state.folders).filter(f => f.trashed).length;
+  if (trashed === 0) return;
+  if (confirm(`Restore ${trashed} folder${trashed===1?'':'s'} from trash?`)) {
+    Object.values(state.folders).forEach(f => f.trashed = false);
+    save(); render();
+  }
+});
+
+// rename
+let renameTarget = null;
+function openRename(slug) {
+  renameTarget = slug;
+  modalInput.value = state.folders[slug].label;
+  modal.classList.add('open');
+  setTimeout(() => { modalInput.focus(); modalInput.select(); }, 30);
+}
+function closeModal() { modal.classList.remove('open'); renameTarget = null; }
+document.getElementById('modal-x').addEventListener('click', closeModal);
+document.getElementById('modal-cancel').addEventListener('click', closeModal);
+document.getElementById('modal-ok').addEventListener('click', () => {
+  if (!renameTarget) return;
+  const v = modalInput.value.trim();
+  if (v) state.folders[renameTarget].label = v.slice(0, 32);
+  save(); render(); closeModal();
+});
+modalInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('modal-ok').click();
+});
+modal.addEventListener('mousedown', e => { if (e.target === modal) closeModal(); });
+
+// menu actions
+document.querySelectorAll('.menu-item').forEach(m => {
+  m.addEventListener('click', () => {
+    const a = m.dataset.action;
+    if (a === 'reset') {
+      if (confirm('Reset desktop to defaults?')) { state = defaults(); save(); render(); }
+    } else if (a === 'about') {
+      alert('TAW.OS v4.7\nThe Accidental Watermelon\n\nDRAG  · move folders around\nCLICK · open an artist\nR-CLK · rename / recolor / trash\nDROP  · onto trash to hide a folder\n\nyour layout is remembered locally.');
+    } else if (a === 'emptytrash') {
+      const trashed = Object.values(state.folders).filter(f => f.trashed).length;
+      if (trashed === 0) { alert('trash is empty.'); return; }
+      if (confirm(`Restore ${trashed} folder${trashed===1?'':'s'}?`)) {
+        Object.values(state.folders).forEach(f => f.trashed = false);
+        save(); render();
+      }
+    }
+  });
+});
+document.getElementById('hue-btn').addEventListener('click', () => {
+  Object.keys(state.folders).forEach(k => {
+    state.folders[k].color = PALETTE[Math.floor(Math.random()*PALETTE.length)];
+  });
+  save(); render();
+});
+document.getElementById('grid-btn').addEventListener('click', () => {
+  state = defaults();
+  // preserve labels and colors and trashed status
+  const prev = load();
+  if (prev) SLUGS.forEach(s => {
+    if (prev.folders[s.slug]) {
+      state.folders[s.slug].label = prev.folders[s.slug].label;
+      state.folders[s.slug].color = prev.folders[s.slug].color;
+      state.folders[s.slug].trashed = prev.folders[s.slug].trashed;
+    }
+  });
+  save(); render();
+});
+
+// clock
+function tick() {
+  const d = new Date();
+  document.getElementById('clock').textContent = d.toTimeString().split(' ')[0];
+}
+tick(); setInterval(tick, 1000);
+
+// boot animation
+const boot = document.getElementById('boot');
+function dismissBoot() {
+  sessionStorage.setItem('taw-booted', '1');
+  boot.classList.add('hidden');
+}
+if (sessionStorage.getItem('taw-booted')) {
+  boot.classList.add('hidden');
+} else {
+  document.querySelectorAll('.boot-line').forEach(l => {
+    setTimeout(() => l.classList.add('show'), parseInt(l.dataset.d, 10));
+  });
+  setTimeout(dismissBoot, 2400);
+  document.addEventListener('click', dismissBoot, { once: true });
+  document.addEventListener('keydown', dismissBoot, { once: true });
+  document.addEventListener('touchstart', dismissBoot, { once: true });
+}
+
+// resize: clamp folders inside new viewport
+window.addEventListener('resize', () => {
+  Object.keys(state.folders).forEach(k => {
+    const p = clampPos(state.folders[k]);
+    state.folders[k].x = p.x; state.folders[k].y = p.y;
+  });
+  save(); render();
+});
+
+render();
+
+// --- folder jitter ---
+setInterval(() => {
+  if (document.body.classList.contains('chaos-off')) return;
+  const all = document.querySelectorAll('.folder');
+  if (!all.length) return;
+  const f = all[Math.floor(Math.random() * all.length)];
+  if (f.classList.contains('dragging')) return;
+  f.classList.add('chaos-folder-jitter');
+  setTimeout(() => f.classList.remove('chaos-folder-jitter'), 200);
+}, 1400);
+
+// --- trash blink ---
+setInterval(() => {
+  if (document.body.classList.contains('chaos-off')) return;
+  if (Math.random() > 0.3) return;
+  trashEl.style.background = '#ff0080';
+  setTimeout(() => { trashEl.style.background = ''; }, 90);
+}, 2000);
+
+// --- marquee re-randomize ---
+const marqueeText = document.getElementById('marquee-text');
+const marqueeMessages = [
+  '♨ ACCIDENTAL.WATERMELON.ORG :: 8 ARTISTS LOADED :: DRAG ANY FOLDER :: NOW PLAYING — silence.wav (0:00 / ∞) ♨',
+  '⌥ SIGNAL UNSTABLE :: ATTEMPTING TO RECOVER :: 4D 65 6C 6F 6E 20 4F 53 :: STAND BY :: ⌥',
+  '☣ DO NOT ADJUST YOUR SET :: WE ARE CONTROLLING THE TRANSMISSION :: PLEASE REMAIN CALM ☣',
+  '★ TASK FAILED SUCCESSFULLY :: 0xDEADMELON :: 8 PERSONALITIES DETECTED :: COMPLIANCE OPTIONAL ★',
+  '▌ ▌ ▌ ▌ KERNEL HEARTBEAT :: ▌ ▌ ▌ ▌ THINKING ABOUT WATERMELONS :: ▌ ▌ ▌ ▌'
+];
+let mi = 0;
+setInterval(() => {
+  mi = (mi + 1) % marqueeMessages.length;
+  if (marqueeText) marqueeText.textContent = marqueeMessages[mi];
+}, 18000);
+</script>
+</body>
+</html>
