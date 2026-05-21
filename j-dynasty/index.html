@@ -3,77 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>J Dynasty // TAW</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../chaos.css">
-<script defer src="../chaos.js"></script>
-<style>
-:root { --ac: #ff5e00; }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #fff; color: #000; font-family: 'VT323', monospace; font-size: 19px; line-height: 1.4; min-height: 100vh; background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 4px); }
-body::before { content:''; position: fixed; inset:0; pointer-events:none; z-index: 9990; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>"); opacity: 0.08; mix-blend-mode: multiply; }
-nav.top { position: sticky; top: 0; z-index: 100; background: #000; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 1.5px; border-bottom: 2px solid #000; }
-nav.top a { color: #fff; text-decoration: none; padding: 4px 8px; }
-nav.top a:hover { background: var(--ac); color: #000; }
-.uc { background: var(--ac); color: #000; border-bottom: 3px solid #000; text-align: center; padding: 6px; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 2.5px; animation: ucflash 1.4s steps(2) infinite; overflow: hidden; white-space: nowrap; }
-@keyframes ucflash { 50% { background: #000; color: var(--ac); } }
-.wrap { max-width: 920px; margin: 0 auto; padding: 50px 24px; }
-.role { display: inline-block; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 2px; padding: 4px 10px; background: #000; color: #fff; margin-bottom: 22px; }
-h1 { font-family: 'Silkscreen', monospace; font-weight: 700; font-size: clamp(44px, 9vw, 96px); line-height: 0.95; letter-spacing: -2px; margin-bottom: 22px; }
-h1 .hollow { -webkit-text-stroke: 2px #000; color: #fff; text-shadow: 6px 6px 0 var(--ac); }
-.tagline { font-size: 22px; max-width: 600px; border-left: 4px solid #000; padding-left: 16px; margin-bottom: 50px; }
-.layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
-.portrait { border: 3px solid #000; background: var(--ac); padding: 14px 14px 28px; box-shadow: 8px 8px 0 #000; position: relative; }
-.portrait::after { content: 'TAW // ARCHIVE'; position: absolute; left: 14px; bottom: 6px; font-family: 'Silkscreen', monospace; font-size: 9px; letter-spacing: 1.5px; }
-.portrait img { width: 100%; display: block; filter: grayscale(1) contrast(1.05); border: 2px solid #000; }
-.bio { background: #fff; border: 2px solid #000; padding: 20px; box-shadow: 6px 6px 0 var(--ac); font-size: 18px; }
-.bio p { margin-bottom: 1em; }
-.bio p:last-child { margin-bottom: 0; }
-.bio .hl { background: var(--ac); padding: 0 4px; font-weight: 700; }
-.links { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.links span.label { font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 2px; padding-right: 6px; }
-.links a { display: inline-block; border: 2px solid #000; background: #fff; padding: 6px 14px; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 1.5px; text-decoration: none; color: #000; box-shadow: 4px 4px 0 #000; }
-.links a:hover { background: var(--ac); }
-.links a.disabled { opacity: 0.45; cursor: not-allowed; box-shadow: 4px 4px 0 #888; }
-.foot { border-top: 2px solid #000; padding: 14px 24px; display: flex; justify-content: space-between; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 1.5px; }
-.foot a { color: #000; text-decoration: none; padding: 4px 8px; }
-.foot a:hover { background: var(--ac); }
-@media (max-width: 700px) { .layout { grid-template-columns: 1fr; } .uc { font-size: 8px; letter-spacing: 1.5px; } }
-</style>
+<title>J Dynasty — The Accidental Watermelon</title>
+<link rel="stylesheet" href="../style.css">
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc60ca0cf8d74d51956d91c0b0c68f61"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
-<body data-chaos="med">
-<nav class="top">
-  <a href="../index.html">★ TAW.OS</a>
-  <a href="../artists/index.html">[back to desktop]</a>
-</nav>
-<div class="uc">▌ PAGE UNDER CONSTRUCTION ▌ COME BACK SOON ▌ PAGE UNDER CONSTRUCTION ▌</div>
-<div class="wrap">
-  <div class="role">TRAILBLAZER / OUTLIER / LEGEND</div>
-  <h1 class="chaos-rgb">J <span class="hollow">DYNASTY</span></h1>
-  <div class="tagline">The one who didn't follow the path — he created it. First on every major DSP.</div>
-  <div class="layout">
-    <div class="portrait"><img src="../pics/J_Dynasty.png" alt="J Dynasty" onerror="this.style.display='none'"></div>
-    <div class="bio">
-      <p><span class="hl">J Dynasty</span> is the outlier. The one who didn't follow the path — he created it.</p>
-      <p>While the rest of TAW was still figuring things out, J Dynasty was already on Spotify, Apple Music, and every major DSP. He wasn't just ahead of the curve; he <span class="hl">was the curve</span>.</p>
-      <p>That inspiration rippled through the entire crew. Playboi Bingi saw what J Dynasty was doing and thought, "Yeah, I can do that too." THA BIG J followed suit. J Dynasty had <span class="hl">changed the game</span> for everyone.</p>
-      <p>His legacy also includes the drama, the history, the <span class="hl">notorious past with MR Steal Yo Girl</span>. The details? Classified. The vibes? Legendary.</p>
-      <p>The trailblazer. The legend. <span class="hl">J Dynasty</span>.</p>
-    </div>
+<body class="page">
+
+<div class="panel">
+  <p class="back"><a href="../artists/index.html">&larr; Artists</a></p>
+  <img class="artimg" src="../pics/J_Dynasty.png" alt="J Dynasty" onerror="this.style.display='none'">
+  <h1>J Dynasty</h1>
+  <p class="role">Trailblazer / Outlier / Legend</p>
+  <p class="tagline">The one who didn't follow the path — he created it. First on every major DSP.</p>
+  <div class="bio">
+    <p>J Dynasty is the outlier. The one who didn't follow the path — he created it.</p>
+    <p>While the rest of TAW was still figuring things out, J Dynasty was already on Spotify, Apple Music, and every major DSP. He wasn't just ahead of the curve; he was the curve.</p>
+    <p>That inspiration rippled through the entire crew. Playboi Bingi saw what J Dynasty was doing and thought, "Yeah, I can do that too." THA BIG J followed suit. J Dynasty had changed the game for everyone.</p>
+    <p>His legacy also includes the drama, the history, the notorious past with MR Steal Yo Girl. The details? Classified. The vibes? Legendary.</p>
+    <p>The trailblazer. The legend. J Dynasty.</p>
   </div>
-  <div class="links">
-    <span class="label">LISTEN ⤳</span>
-    <a href="#" class="disabled" aria-disabled="true">SPOTIFY ↗</a>
-    <a href="#" class="disabled" aria-disabled="true">APPLE MUSIC ↗</a>
+  <div class="pager">
+    <a href="../digitalestrogen/index.html">&larr; digitalestrogen</a>
+    <a href="../sulpa-boy/index.html">Sulpa Boy &rarr;</a>
   </div>
 </div>
-<div class="foot">
-  <a href="../digitalestrogen/index.html">← DIGITALESTROGEN</a>
-  <a href="../sulpa-boy/index.html">SULPA BOY →</a>
-</div>
+
+<script type="module" src="../bg.js"></script>
+
 <!-- Default Statcounter code for the tung https://accidentalwatermelon.org/ -->
 <script type="text/javascript">
 var sc_project=13244458;
